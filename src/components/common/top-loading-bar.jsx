@@ -5,7 +5,8 @@ export default function TopLoadingBar() {
     <div className="sticky top-0 w-full z-30">
       <LoadingBar
         style={{
-          backgroundColor: "#FFFFFF", // Set this to transparent to avoid conflicts
+          backgroundColor: "transparent", // Set this to transparent to avoid conflicts
+          backgroundImage: "linear-gradient(to right, #32C7C4, #532599)", // Define your gradient here
           height: "2px",
           width: "100%",
         }}

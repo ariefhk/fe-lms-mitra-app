@@ -1,11 +1,12 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
   ],
   prefix: "",
   theme: {
@@ -17,7 +18,34 @@ module.exports = {
       },
     },
     extend: {
+      fontSize: {
+        txt10_14: ["10px", "14px"],
+        txt12_20: ["12px", "20px"],
+        txt14_20: ["14px", "20px"],
+        txt16_20: ["16px", "20px"],
+        txt16_24: ["16px", "24px"],
+        txt18_20: ["18px", "20px"],
+        txt18_28: ["18px", "28px"],
+        txt20_30: ["20px", "30px"],
+        txt24_36: ["24px", "36px"],
+        txt24_44: ["24px", "44px"],
+        txt30_40: ["30px", "40px"],
+        txt36_40: ["36px", "40px"],
+        txt40_60: ["40px", "60px"],
+        txt50_60: ["50px", "60px"],
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
+      backgroundImage: {
+        "color-1": "linear-gradient(90deg, #32C7C4 0%, #532599 100%)",
+      },
       colors: {
+        "color-2": "#FBFBFB",
+        "color-3": "#030303",
+        "color-4": "#6D737A",
+        "color-5": "#532599",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

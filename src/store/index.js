@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query"
 import { loadingBarReducer } from "react-redux-loading-bar"
 import { apiEndpoint, protectedApiEndpoint } from "./api/instance"
 import counterReducer from "./slices/counter.slice"
+import useReducer from "./slices/user.slice"
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     [protectedApiEndpoint.reducerPath]: protectedApiEndpoint.reducer,
     loadingBar: loadingBarReducer,
     counter: counterReducer,
+    user: useReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
