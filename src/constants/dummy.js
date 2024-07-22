@@ -127,3 +127,34 @@ export const menteeDetail = {
     name: "Siska",
   },
 }
+
+export const assignment = [
+  {
+    id: 1,
+    title: "Assignment 1",
+    description: "Create a simple calculator",
+    due_date: "2021-06-30",
+    class: {
+      id: 1,
+      name: "ANDROID",
+    },
+    mentor: {
+      id: 1,
+      name: "Siska",
+    },
+  },
+  {
+    id: 2,
+    title: "Assignment 2",
+    description: "Create a simple website",
+    due_date: "2021-06-30",
+    class: {
+      id: 2,
+      name: "WEB",
+    },
+    mentor: {
+      id: 2,
+      name: "Hasna",
+    },
+  },
+]
