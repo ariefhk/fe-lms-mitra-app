@@ -25,7 +25,7 @@ export const MENTEE_LINK = [
     subLinks: [
       {
         id: 4,
-        name: "Mentee",
+        name: "Absensi",
         icon: FaInfoCircle,
         href: "/mentee/informasi/absensi",
       },
