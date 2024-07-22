@@ -12,7 +12,7 @@ const GradientButton = React.forwardRef(
         ref={ref}
         variant="plain"
         className={cn(
-          "bg-color-1 rounded-full group p-0 h-0 w-0  border hover:bg-none text-white hover:text-cyan-500",
+          "bg-color-1 rounded-lg group p-0 h-0 w-0  border hover:bg-none text-white hover:text-cyan-500",
           className,
         )}>
         {isLoading && <BsArrowRepeat className="animate-spin" />}
@@ -29,6 +29,6 @@ const GradientButton = React.forwardRef(
     )
   },
 )
-GradientButton.displayName = "Button"
+GradientButton.displayName = "GradientButton"
 
 export { GradientButton }
