@@ -1,8 +1,11 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
-import { GradientInput } from "@/components/common/gradient-input"
-import AdminListMenteeTable from "@/components/table/admin/list-mentee"
-import { menteeList } from "@/constants/dummy"
+import MentorListNilaiDetailMenteeTable from "@/components/table/mentor/list-mentee-nilai-detail"
+import MentorListNilaiDetailLaporanMenteeTable from "@/components/table/mentor/list-mentee-nilai-detail-laporan-akhir"
+import {
+  menteeAssignment,
+  menteeFinalReportAsignment,
+} from "@/constants/dummy/mentor-page.dummy"
 import { IoMdAdd } from "react-icons/io"
 
 export default function MentorListMenteeNilaiDetailPage() {
@@ -32,22 +35,20 @@ export default function MentorListMenteeNilaiDetailPage() {
           </div>
           <div className="space-y-2">
             <h1 className="text-txt20_30 font-semibold">Laporan Akhir :</h1>
-            <AdminListMenteeTable
-              onDeleteMentee={() => {}}
-              onEditMentee={() => {}}
-              isLoadingGetMentees={false}
-              isSuccessGetMentees={true}
-              mentees={menteeList}
+            <MentorListNilaiDetailLaporanMenteeTable
+              isLoadingGetMenteeAssignments={false}
+              isSuccessGetMenteeAssignments={true}
+              onEditMenteeAssigment={() => {}}
+              menteeAssignments={menteeFinalReportAsignment}
             />
           </div>
           <div className="space-y-2">
             <h1 className="text-txt20_30 font-semibold">Daftar Tugas :</h1>
-            <AdminListMenteeTable
-              onDeleteMentee={() => {}}
-              onEditMentee={() => {}}
-              isLoadingGetMentees={false}
-              isSuccessGetMentees={true}
-              mentees={menteeList}
+            <MentorListNilaiDetailMenteeTable
+              isLoadingGetMenteeAssignments={false}
+              isSuccessGetMenteeAssignments={true}
+              onEditMenteeAssigment={() => {}}
+              menteeAssignments={menteeAssignment}
             />
           </div>
         </div>
