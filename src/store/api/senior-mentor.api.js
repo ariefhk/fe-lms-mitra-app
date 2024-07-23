@@ -61,8 +61,29 @@ export const seniorMentorApi = protectedApiEndpoint.injectEndpoints({
         { type: "SENIOR_MENTOR", id: "LIST_OF_SENIOR_MENTOR" },
       ],
     }),
+    deleteSeniorMentor: builder.mutation({
+      query: (args) => ({
+        url: `senior-mentor/${args?.seniorMentorId}`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      transformResponse: () => {
+        return true
+      },
+      invalidatesTags: () => [
+        { type: "MENTOR", id: "LIST_OF_MENTOR" },
+        { type: "MENTOR", id: "LIST_OF_MENTOR_BY_SENIOR_MENTOR" },
+        { type: "SENIOR_MENTOR", id: "LIST_OF_SENIOR_MENTOR" },
+        { type: "MENTEE", id: "LIST_OF_MENTEE" },
+      ],
+    }),
   }),
 })
 
-export const { useFindAllSeniorMentorQuery, useCreateSeniorMentorMutation } =
-  seniorMentorApi
+export const {
+  useFindAllSeniorMentorQuery,
+  useCreateSeniorMentorMutation,
+  useDeleteSeniorMentorMutation,
+} = seniorMentorApi

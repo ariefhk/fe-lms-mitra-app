@@ -8,68 +8,129 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { getImageURL } from "@/lib/getImage"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { useDeleteSeniorMentorMutation } from "@/store/api/senior-mentor.api"
 import PropTypes from "prop-types"
+import { BsArrowRepeat } from "react-icons/bs"
+import Swal from "sweetalert2"
 
 export default function AdminDeleteSeniorMentorDialog({
   open = false,
   onOpenChange,
-  onClose,
   seniorMentor,
+  onClose,
 }) {
+  const [deleteSeniorMentor, { isLoading: isLoadingDeleteSeniorMentor }] =
+    useDeleteSeniorMentorMutation()
+
+  async function onDeleteSeniorMentor() {
+    try {
+      const deleteSeniorMentorData = {
+        seniorMentorId: seniorMentor.id,
+      }
+      await deleteSeniorMentor(deleteSeniorMentorData).unwrap()
+      onOpenChange(false)
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil Hapus Senior Mentor!",
+        text: "Selamat Anda berhasil menghapus Senior Mentor!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    } catch (error) {
+      console.log("ERROR DELETE Senior MENTOR: ", error)
+      Swal.fire({
+        icon: "error",
+        title: "Gagal Hapus Senior Mentor!",
+        text: error.message ?? "Maaf, Anda gagal menghapus Senior Mentor!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
+  }
+
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
+      <AlertDialogContent>
         <AlertDialogDescription className="sr-only">
-          This action is for detail senior mentor.
+          This action cannot be undone. This will permanently delete your
+          account and remove your data from our servers.
         </AlertDialogDescription>
-        <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16">
-          <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
-              Detail Senior Mentor
+        <AlertDialogHeader className="space-y-5">
+          <AlertDialogTitle className="text-txt20_30 text-wrap">
+            Apakah Anda yakin hapus Senior Mentor{" "}
+            <span className="underline underline-offset-4">
+              {seniorMentor?.name} ?
             </span>
-            <Separator />
           </AlertDialogTitle>
-          {seniorMentor?.profilePicture && (
-            <img
-              src={getImageURL(seniorMentor?.profilePicture)}
-              alt="Profile"
-              className="w-[200px] h-[200px]"
-            />
-          )}
-          <table>
-            <tbody>
-              <tr>
-                <td>Name:</td>
-                <td>{seniorMentor?.name}</td>
-              </tr>
-              <tr>
-                <td>Username:</td>
-                <td>{seniorMentor?.username}</td>
-              </tr>
-              <tr>
-                <td>Email:</td>
-                <td>{seniorMentor?.email}</td>
-              </tr>
-              <tr>
-                <td>Phone Number:</td>
-                <td>{seniorMentor?.no_telp}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="w-full   max-h-[400px] overflow-y-auto">
+            <Table className="">
+              <TableHeader>
+                <TableRow className="bg-color-1   hover:bg-color-1/80">
+                  <TableHead className="w-[120px] text-white"></TableHead>
+                  <TableHead className=" text-white text-[16px] leading-[24px]">
+                    Keterangan
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody className="[&_tr:last-child]:border ">
+                <TableRow className="border">
+                  <TableCell className="font-medium text-txt16_24">
+                    Nama Senior Mentor
+                  </TableCell>
+                  <TableCell className="text-txt16_24">
+                    {seniorMentor?.name || "-"}
+                  </TableCell>
+                </TableRow>
+                {/* <TableRow className="border">
+                  <TableCell className="font-medium text-txt16_24">
+                    Guru
+                  </TableCell>
+                  <TableCell className="text-txt16_24">
+                    {seniorMentor?.teacher?.name || "-"}
+                  </TableCell>
+                </TableRow>
+                <TableRow className="border">
+                  <TableCell className="font-medium text-txt16_24">
+                    Jumlah Murid
+                  </TableCell>
+                  <TableCell className="text-txt16_24">
+                    {seniorMentor?.studentCount || "-"}
+                  </TableCell>
+                </TableRow> */}
+              </TableBody>
+            </Table>
+          </div>
         </AlertDialogHeader>
-        <Separator />
-        <AlertDialogFooter className=" px-8">
+        <AlertDialogFooter>
           <AlertDialogCancel asChild>
             <Button
+              type="button"
               onClick={() => {
                 typeof onClose === "function" && onClose()
               }}
-              className="bg-color-4 text-white hover:text-white hover:bg-color-4/60">
+              className="bg-color-1 text-white hover:text-white hover:bg-color-1/60">
               Tutup
             </Button>
           </AlertDialogCancel>
+          <Button
+            disabled={isLoadingDeleteSeniorMentor}
+            onClick={async () => {
+              await onDeleteSeniorMentor()
+            }}
+            className="bg-color-4 text-white hover:text-white hover:bg-color-4/60 gap-x-2 flex items-center">
+            {isLoadingDeleteSeniorMentor && (
+              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
+            )}{" "}
+            Hapus
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -79,6 +140,6 @@ export default function AdminDeleteSeniorMentorDialog({
 AdminDeleteSeniorMentorDialog.propTypes = {
   open: PropTypes.bool,
   onOpenChange: PropTypes.func,
-  onClose: PropTypes.func,
   seniorMentor: PropTypes.object,
+  onClose: PropTypes.func,
 }

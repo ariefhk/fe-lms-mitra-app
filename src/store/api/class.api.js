@@ -48,7 +48,28 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [{ type: "CLASS", id: "LIST_OF_CLASS" }],
     }),
+
+    deleteClass: builder.mutation({
+      query: (args) => ({
+        url: `class/${args?.classId}`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      transformResponse: () => {
+        return true
+      },
+      invalidatesTags: () => [
+        { type: "MENTOR", id: "LIST_OF_MENTOR" },
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+      ],
+    }),
   }),
 })
 
-export const { useFindAllClassQuery, useCreateClassMutation } = classApi
+export const {
+  useFindAllClassQuery,
+  useCreateClassMutation,
+  useDeleteClassMutation,
+} = classApi

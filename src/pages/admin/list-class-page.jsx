@@ -2,10 +2,12 @@ import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
 import AdminCreateClassDialog from "@/components/dialog/admin/add-class-dialog"
+import AdminDeleteClassDialog from "@/components/dialog/admin/delete-class-dialog"
 import AdminListClassTable from "@/components/table/admin/list-class"
 import useDialog from "@/hooks/useDialog"
 import useInput from "@/hooks/useInput"
 import { useFindAllClassQuery } from "@/store/api/class.api"
+import { useState } from "react"
 import { IoMdAdd } from "react-icons/io"
 
 const initialClassSearch = {
@@ -13,10 +15,16 @@ const initialClassSearch = {
 }
 
 export default function AdminListClassPage() {
+  const [choosedClass, setChoosedClass] = useState(null)
   const {
     isOpenDialog: isOpenCreateClassDialog,
     onOpenDialog: onOpenCreateClassDialog,
   } = useDialog()
+  const {
+    isOpenDialog: isOpenDeleteClassDialog,
+    onOpenDialog: onOpenDeleteClassDialog,
+  } = useDialog()
+
   const { values: searchClassSearch, onChange: onChangeClassSearch } =
     useInput(initialClassSearch)
 
@@ -27,6 +35,11 @@ export default function AdminListClassPage() {
   } = useFindAllClassQuery({
     name: searchClassSearch?.name,
   })
+
+  function onDeleteClass(classes) {
+    setChoosedClass(classes)
+    onOpenDeleteClassDialog(true)
+  }
 
   console.log("classes", classes)
 
@@ -52,7 +65,7 @@ export default function AdminListClassPage() {
             />
           </div>
           <AdminListClassTable
-            onDeleteClass={() => {}}
+            onDeleteClass={onDeleteClass}
             onEditClass={() => {}}
             isLoadingGetClasses={isLoadingGetClasses}
             isSuccessGetClasses={isSuccessGetClasses}
@@ -64,6 +77,12 @@ export default function AdminListClassPage() {
         onClose={() => {}}
         onOpenChange={onOpenCreateClassDialog}
         open={isOpenCreateClassDialog}
+      />
+      <AdminDeleteClassDialog
+        onClose={() => setChoosedClass(null)}
+        open={isOpenDeleteClassDialog}
+        onOpenChange={onOpenDeleteClassDialog}
+        classes={choosedClass}
       />
     </div>
   )

@@ -30,6 +30,36 @@ export const mentorApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+    findMentorBySeniorMentor: builder.query({
+      query: (args) => {
+        return {
+          url: `mentor/senior-mentor/${args?.seniorMentorId}?name=${args.name}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const mentor = response?.data
+        return mentor
+      },
+      providesTags: () => [
+        { type: "MENTOR", id: "LIST_OF_MENTOR_BY_SENIOR_MENTOR" },
+      ],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL MENTOR BY SENIOR MENTOR: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
     createMentor: builder.mutation({
       query: (args) => {
         const createMentorFormData = new FormData()
@@ -53,7 +83,30 @@ export const mentorApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [{ type: "MENTOR", id: "LIST_OF_MENTOR" }],
     }),
+    deleteMentor: builder.mutation({
+      query: (args) => ({
+        url: `mentor/${args?.mentorId}`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      transformResponse: () => {
+        return true
+      },
+      invalidatesTags: () => [
+        { type: "MENTOR", id: "LIST_OF_MENTOR" },
+        { type: "MENTOR", id: "LIST_OF_MENTOR_BY_SENIOR_MENTOR" },
+        { type: "SENIOR_MENTOR", id: "LIST_OF_SENIOR_MENTOR" },
+        { type: "MENTEE", id: "LIST_OF_MENTEE" },
+      ],
+    }),
   }),
 })
 
-export const { useFindAllMentorQuery, useCreateMentorMutation } = mentorApi
+export const {
+  useFindAllMentorQuery,
+  useCreateMentorMutation,
+  useFindMentorBySeniorMentorQuery,
+  useDeleteMentorMutation,
+} = mentorApi
