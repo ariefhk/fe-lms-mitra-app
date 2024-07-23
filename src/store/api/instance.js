@@ -16,7 +16,7 @@ const prepareAuthHeaders = (headers) => {
 export const apiEndpoint = createApi({
   reducerPath: "PUBLIC_ENDPOINT",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env?.VITE_BASE_URL,
+    baseUrl: import.meta.env?.VITE_BASE_API_URL,
   }),
   endpoints: () => ({}),
 })
@@ -25,7 +25,7 @@ export const apiEndpoint = createApi({
 export const protectedApiEndpoint = createApi({
   reducerPath: "PROTECTED_ENDPOINT",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env?.VITE_BASE_URL,
+    baseUrl: import.meta.env?.VITE_BASE_API_URL,
     prepareHeaders: prepareAuthHeaders,
     tagTypes: [
       "AUTH",
