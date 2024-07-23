@@ -1,6 +1,7 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
+import AdminCreateMentorDialog from "@/components/dialog/admin/add-mentor-dialog"
 import AdminListMentorTable from "@/components/table/admin/list-mentor"
 import useDialog from "@/hooks/useDialog"
 import useInput from "@/hooks/useInput"
@@ -67,6 +68,7 @@ export default function AdminListMentorPage() {
         <div className="flex flex-col items-end gap-y-8">
           <div className="flex items-center ">
             <GradientButton
+              onClick={() => onOpenCreateMentorDialog(true)}
               className="w-[184px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
               name="Tambah Data"
               iconClassName="w-6 h-6"
@@ -89,6 +91,11 @@ export default function AdminListMentorPage() {
           />
         </div>
       </main>
+      <AdminCreateMentorDialog
+        onClose={() => {}}
+        onOpenChange={onOpenCreateMentorDialog}
+        open={isOpenCreateMentorDialog}
+      />
     </div>
   )
 }

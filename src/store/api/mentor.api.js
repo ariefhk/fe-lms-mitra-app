@@ -30,7 +30,30 @@ export const mentorApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+    createMentor: builder.mutation({
+      query: (args) => {
+        const createMentorFormData = new FormData()
+        createMentorFormData.append("name", args?.name)
+        createMentorFormData.append("no_telp", args?.no_telp)
+        createMentorFormData.append("email", args?.email)
+        createMentorFormData.append("username", args?.username)
+        createMentorFormData.append("password", args?.password)
+        createMentorFormData.append("seniorMentorId", args?.seniorMentorId)
+        createMentorFormData.append("profilePicture", args?.profilePicture)
+        return {
+          url: `mentor`,
+          method: "POST",
+          formData: true,
+          body: createMentorFormData,
+        }
+      },
+      transformResponse: (response) => {
+        const mentor = response.data
+        return mentor
+      },
+      invalidatesTags: () => [{ type: "MENTOR", id: "LIST_OF_MENTOR" }],
+    }),
   }),
 })
 
-export const { useFindAllMentorQuery } = mentorApi
+export const { useFindAllMentorQuery, useCreateMentorMutation } = mentorApi

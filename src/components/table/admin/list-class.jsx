@@ -25,7 +25,7 @@ function AdminClassRows({
           <TableCell className="font-medium">{index + 1}</TableCell>
           <TableCell>{c?.name || "-"}</TableCell>
           <TableCell>{c?.mentor?.name || "-"}</TableCell>
-          <TableCell>{c?.senior_mentor?.name || "-"}</TableCell>
+          <TableCell>{c?.seniorMentor?.name || "-"}</TableCell>
           <TableCell>{c?.menteeCount || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
             <Button

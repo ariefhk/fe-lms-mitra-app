@@ -33,6 +33,7 @@ export default function AdminListMenteePage() {
     isOpenDialog: isOpenDetailMenteeDialog,
     onOpenDialog: onOpenDetailMenteeDialog,
   } = useDialog()
+
   const { values: searchMenteeSearch, onChange: onChangeMenteeSearch } =
     useInput(initialMenteeSearch)
 
