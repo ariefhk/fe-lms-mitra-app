@@ -61,6 +61,13 @@ export default function LoginForm() {
       })
     } catch (error) {
       console.log("ERROR ON LOGIN SUBMIT: ", error)
+      Swal.fire({
+        icon: "error",
+        title: "Gagal Login!",
+        text: "Maaf, Anda gagal gagal Login!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
     }
   }
 
@@ -114,7 +121,7 @@ export default function LoginForm() {
           <GradientButton
             type="submit"
             isLoading={isLoading}
-            className="rounded-[4px] w-full flex gap-x-2   h-[40px] px-5"
+            className="rounded-[4px] w-full flex gap-x-2 text-[16px]  h-[50px] px-5"
             name="Masuk"
           />
         </div>

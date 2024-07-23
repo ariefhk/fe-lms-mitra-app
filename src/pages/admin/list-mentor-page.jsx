@@ -2,10 +2,64 @@ import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
 import AdminListMentorTable from "@/components/table/admin/list-mentor"
-import { mentorList } from "@/constants/dummy"
+import useDialog from "@/hooks/useDialog"
+import useInput from "@/hooks/useInput"
+import { useFindAllMentorQuery } from "@/store/api/mentor.api"
+import { useState } from "react"
 import { IoMdAdd } from "react-icons/io"
 
+const initialMentorSearch = {
+  name: "",
+}
+
 export default function AdminListMentorPage() {
+  const [choosedMentor, seChoosedMentor] = useState(null)
+
+  const {
+    isOpenDialog: isOpenCreateMentorDialog,
+    onOpenDialog: onOpenCreateMentorDialog,
+  } = useDialog()
+
+  const {
+    isOpenDialog: isOpenEditMentorDialog,
+    onOpenDialog: onOpenEditMentorDialog,
+  } = useDialog()
+  const {
+    isOpenDialog: isOpenDeleteMentorDialog,
+    onOpenDialog: onOpenDeleteMentorDialog,
+  } = useDialog()
+
+  const {
+    isOpenDialog: isOpenDetailMentorDialog,
+    onOpenDialog: onOpenDetailMentorDialog,
+  } = useDialog()
+
+  const { values: searchMentorSearch, onChange: onChangeMentorSearch } =
+    useInput(initialMentorSearch)
+
+  const {
+    data: mentors,
+    isLoading: isLoadingGetMentor,
+    isSuccess: isSuccessGetMentor,
+  } = useFindAllMentorQuery({
+    name: searchMentorSearch.name,
+  })
+
+  function onDetailMentor(mentor) {
+    seChoosedMentor(mentor)
+    onOpenDetailMentorDialog(true)
+  }
+  function onEditMentor(mentor) {
+    seChoosedMentor(mentor)
+    onOpenEditMentorDialog(true)
+  }
+  function onDeleteMentor(mentor) {
+    seChoosedMentor(mentor)
+    onOpenDeleteMentorDialog(true)
+  }
+
+  console.log(mentors)
+
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Mentor" />
@@ -21,14 +75,17 @@ export default function AdminListMentorPage() {
             <GradientInput
               placeholder="Cari Mentor..."
               inputClassName="text-[15px]"
+              name="name"
+              value={searchMentorSearch.name}
+              onChange={onChangeMentorSearch}
             />
           </div>
           <AdminListMentorTable
+            isLoadingGetMentors={isLoadingGetMentor}
+            isSuccessGetMentors={isSuccessGetMentor}
+            mentors={mentors}
             onDeleteMentor={() => {}}
             onEditMentor={() => {}}
-            isLoadingGetMentors={false}
-            isSuccessGetMentors={true}
-            mentors={mentorList}
           />
         </div>
       </main>

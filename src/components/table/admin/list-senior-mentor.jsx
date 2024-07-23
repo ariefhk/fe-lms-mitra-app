@@ -1,4 +1,4 @@
-import { GradientLink } from "@/components/common/gradient-link"
+import { GradientButton } from "@/components/common/gradient-button"
 import { Button } from "@/components/ui/button"
 import {
   Table,
@@ -15,6 +15,7 @@ function AdminSeniorMentorRows({
   seniorMentors,
   isSuccessGetSeniorMentors,
   isLoadingGetSeniorMentors,
+  onDetailSeniorMentor,
   onEditSeniorMentor,
   onDeleteSeniorMentor,
 }) {
@@ -32,10 +33,14 @@ function AdminSeniorMentorRows({
           <TableCell>{c?.username || "-"}</TableCell>
           <TableCell>{c?.name || "-"}</TableCell>
           <TableCell>{c?.no_telp || "-"}</TableCell>
-          <TableCell>{c?.mentorCount || "-"}</TableCell>
+          <TableCell>{c?.mentorCount === 0 ? "0" : c?.mentorCount}</TableCell>
           <TableCell className="flex gap-x-2">
-            <GradientLink
-              to={"/admin/user/senior-mentor/" + c.id}
+            <GradientButton
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onDetailSeniorMentor(c)
+              }}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"
               Icon={MdOutlineVisibility}
@@ -96,6 +101,7 @@ export default function AdminListSeniorMentorTable({
   seniorMentors,
   isSuccessGetSeniorMentors,
   isLoadingGetSeniorMentors,
+  onDetailSeniorMentor,
   onEditSeniorMentor,
   onDeleteSeniorMentor,
 }) {
@@ -118,6 +124,7 @@ export default function AdminListSeniorMentorTable({
           isSuccessGetSeniorMentors={isSuccessGetSeniorMentors}
           onDeleteSeniorMentor={onDeleteSeniorMentor}
           onEditSeniorMentor={onEditSeniorMentor}
+          onDetailSeniorMentor={onDetailSeniorMentor}
         />
       </TableBody>
     </Table>
@@ -128,6 +135,7 @@ AdminListSeniorMentorTable.propTypes = {
   seniorMentors: PropTypes.array,
   isSuccessGetSeniorMentors: PropTypes.bool,
   isLoadingGetSeniorMentors: PropTypes.bool,
+  onDetailSeniorMentor: PropTypes.func,
   onEditSeniorMentor: PropTypes.func,
   onDeleteSeniorMentor: PropTypes.func,
 }

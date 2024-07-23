@@ -2,10 +2,60 @@ import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
 import AdminListMenteeTable from "@/components/table/admin/list-mentee"
-import { menteeList } from "@/constants/dummy"
+import useDialog from "@/hooks/useDialog"
+import useInput from "@/hooks/useInput"
+import { useFindAllMenteeQuery } from "@/store/api/mentee.api"
+import { useState } from "react"
 import { IoMdAdd } from "react-icons/io"
 
+const initialMenteeSearch = {
+  name: "",
+}
+
 export default function AdminListMenteePage() {
+  const [choosedMentee, seChoosedMentee] = useState(null)
+
+  const {
+    isOpenDialog: isOpenCreateMenteeDialog,
+    onOpenDialog: onOpenCreateMenteeDialog,
+  } = useDialog()
+
+  const {
+    isOpenDialog: isOpenEditMenteeDialog,
+    onOpenDialog: onOpenEditMenteeDialog,
+  } = useDialog()
+  const {
+    isOpenDialog: isOpenDeleteMenteeDialog,
+    onOpenDialog: onOpenDeleteMenteeDialog,
+  } = useDialog()
+
+  const {
+    isOpenDialog: isOpenDetailMenteeDialog,
+    onOpenDialog: onOpenDetailMenteeDialog,
+  } = useDialog()
+  const { values: searchMenteeSearch, onChange: onChangeMenteeSearch } =
+    useInput(initialMenteeSearch)
+
+  const {
+    data: mentees,
+    isLoading: isLoadingGetMentees,
+    isSuccess: isSuccessGetMentees,
+  } = useFindAllMenteeQuery({
+    name: searchMenteeSearch.name,
+  })
+
+  function onDetailMentee(mentee) {
+    seChoosedMentee(mentee)
+    onOpenDetailMenteeDialog(true)
+  }
+  function onEditMentee(mentee) {
+    seChoosedMentee(mentee)
+    onOpenEditMenteeDialog(true)
+  }
+  function onDeleteMentee(mentee) {
+    seChoosedMentee(mentee)
+    onOpenDeleteMenteeDialog(true)
+  }
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Mentee" />
@@ -21,14 +71,17 @@ export default function AdminListMenteePage() {
             <GradientInput
               placeholder="Cari Mentee..."
               inputClassName="text-[15px]"
+              name="name"
+              value={searchMenteeSearch.name}
+              onChange={onChangeMenteeSearch}
             />
           </div>
           <AdminListMenteeTable
             onDeleteMentee={() => {}}
             onEditMentee={() => {}}
-            isLoadingGetMentees={false}
-            isSuccessGetMentees={true}
-            mentees={menteeList}
+            isLoadingGetMentees={isLoadingGetMentees}
+            isSuccessGetMentees={isSuccessGetMentees}
+            mentees={mentees}
           />
         </div>
       </main>
