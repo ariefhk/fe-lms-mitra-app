@@ -15,8 +15,6 @@ export const mentorApi = protectedApiEndpoint.injectEndpoints({
       },
       transformResponse: (response) => {
         const mentor = response?.data
-
-        console.log("LOGG MENTOR: ", mentor)
         return mentor
       },
       providesTags: () => [{ type: "MENTOR", id: "LIST_OF_MENTOR" }],
@@ -83,6 +81,29 @@ export const mentorApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [{ type: "MENTOR", id: "LIST_OF_MENTOR" }],
     }),
+    updateMentor: builder.mutation({
+      query: (args) => {
+        const updateMentorFormData = new FormData()
+        updateMentorFormData.append("name", args?.name)
+        updateMentorFormData.append("no_telp", args?.no_telp)
+        updateMentorFormData.append("email", args?.email)
+        updateMentorFormData.append("username", args?.username)
+        updateMentorFormData.append("password", args?.password)
+        updateMentorFormData.append("seniorMentorId", args?.seniorMentorId)
+        updateMentorFormData.append("profilePicture", args?.profilePicture)
+        return {
+          url: `mentor/${args?.mentorId}`,
+          method: "PUT",
+          formData: true,
+          body: updateMentorFormData,
+        }
+      },
+      transformResponse: (response) => {
+        const mentor = response.data
+        return mentor
+      },
+      invalidatesTags: () => [{ type: "MENTOR", id: "LIST_OF_MENTOR" }],
+    }),
     deleteMentor: builder.mutation({
       query: (args) => ({
         url: `mentor/${args?.mentorId}`,
@@ -109,4 +130,5 @@ export const {
   useCreateMentorMutation,
   useFindMentorBySeniorMentorQuery,
   useDeleteMentorMutation,
+  useUpdateMentorMutation,
 } = mentorApi

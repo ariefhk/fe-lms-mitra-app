@@ -28,7 +28,79 @@ export const menteeApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+    createMentee: builder.mutation({
+      query: (args) => {
+        const createMenteeFormData = new FormData()
+        createMenteeFormData.append("name", args?.name)
+        createMenteeFormData.append("no_telp", args?.no_telp)
+        createMenteeFormData.append("batch", args?.batch)
+        createMenteeFormData.append("major", args?.major)
+        createMenteeFormData.append("university", args?.university)
+        createMenteeFormData.append("classId", args?.classId)
+        createMenteeFormData.append("email", args?.email)
+        createMenteeFormData.append("username", args?.username)
+        createMenteeFormData.append("password", args?.password)
+        createMenteeFormData.append("seniorMentorId", args?.seniorMentorId)
+        createMenteeFormData.append("profilePicture", args?.profilePicture)
+        return {
+          url: `mentee`,
+          method: "POST",
+          formData: true,
+          body: createMenteeFormData,
+        }
+      },
+      transformResponse: (response) => {
+        const mentee = response.data
+        return mentee
+      },
+      invalidatesTags: () => [{ type: "MENTEE", id: "LIST_OF_MENTEE" }],
+    }),
+    updateMentee: builder.mutation({
+      query: (args) => {
+        const updateMenteeFormData = new FormData()
+        updateMenteeFormData.append("name", args?.name)
+        updateMenteeFormData.append("no_telp", args?.no_telp)
+        updateMenteeFormData.append("batch", args?.batch)
+        updateMenteeFormData.append("major", args?.major)
+        updateMenteeFormData.append("university", args?.university)
+        updateMenteeFormData.append("classId", args?.classId)
+        updateMenteeFormData.append("email", args?.email)
+        updateMenteeFormData.append("username", args?.username)
+        updateMenteeFormData.append("password", args?.password)
+        updateMenteeFormData.append("seniorMentorId", args?.seniorMentorId)
+        updateMenteeFormData.append("profilePicture", args?.profilePicture)
+        return {
+          url: `mentee/${args?.menteeId}`,
+          method: "PUT",
+          formData: true,
+          body: updateMenteeFormData,
+        }
+      },
+      transformResponse: (response) => {
+        const mentee = response.data
+        return mentee
+      },
+      invalidatesTags: () => [{ type: "MENTEE", id: "LIST_OF_MENTEE" }],
+    }),
+    deleteMentee: builder.mutation({
+      query: (args) => ({
+        url: `mentee/${args?.menteeId}`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      transformResponse: () => {
+        return true
+      },
+      invalidatesTags: () => [{ type: "MENTEE", id: "LIST_OF_MENTEE" }],
+    }),
   }),
 })
 
-export const { useFindAllMenteeQuery } = menteeApi
+export const {
+  useFindAllMenteeQuery,
+  useCreateMenteeMutation,
+  useDeleteMenteeMutation,
+  useUpdateMenteeMutation,
+} = menteeApi

@@ -3,6 +3,7 @@ import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
 import AdminCreateMentorDialog from "@/components/dialog/admin/add-mentor-dialog"
 import AdminDeleteMentorDialog from "@/components/dialog/admin/delete-mentor-dialog"
+import AdminEditMentorDialog from "@/components/dialog/admin/edit-mentor-dialog"
 import AdminListMentorTable from "@/components/table/admin/list-mentor"
 import useDialog from "@/hooks/useDialog"
 import useInput from "@/hooks/useInput"
@@ -101,6 +102,12 @@ export default function AdminListMentorPage() {
         onClose={() => seChoosedMentor(null)}
         onOpenChange={onOpenDeleteMentorDialog}
         open={isOpenDeleteMentorDialog}
+        mentor={choosedMentor}
+      />
+      <AdminEditMentorDialog
+        onClose={() => seChoosedMentor(null)}
+        onOpenChange={onOpenEditMentorDialog}
+        open={isOpenEditMentorDialog}
         mentor={choosedMentor}
       />
     </div>

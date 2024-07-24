@@ -1,6 +1,9 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
+import AdminCreateMenteeDialog from "@/components/dialog/admin/add-mentee-dialog"
+import AdminDeleteMenteeDialog from "@/components/dialog/admin/delete-mentee-dialog"
+import AdminEditMenteeDialog from "@/components/dialog/admin/edit-mentee-dialog"
 import AdminListMenteeTable from "@/components/table/admin/list-mentee"
 import useDialog from "@/hooks/useDialog"
 import useInput from "@/hooks/useInput"
@@ -13,7 +16,7 @@ const initialMenteeSearch = {
 }
 
 export default function AdminListMenteePage() {
-  const [choosedMentee, seChoosedMentee] = useState(null)
+  const [choosedMentee, setChoosedMentee] = useState(null)
 
   const {
     isOpenDialog: isOpenCreateMenteeDialog,
@@ -46,15 +49,15 @@ export default function AdminListMenteePage() {
   })
 
   function onDetailMentee(mentee) {
-    seChoosedMentee(mentee)
+    setChoosedMentee(mentee)
     onOpenDetailMenteeDialog(true)
   }
   function onEditMentee(mentee) {
-    seChoosedMentee(mentee)
+    setChoosedMentee(mentee)
     onOpenEditMenteeDialog(true)
   }
   function onDeleteMentee(mentee) {
-    seChoosedMentee(mentee)
+    setChoosedMentee(mentee)
     onOpenDeleteMenteeDialog(true)
   }
   return (
@@ -64,6 +67,7 @@ export default function AdminListMenteePage() {
         <div className="flex flex-col items-end gap-y-8">
           <div className="flex items-center ">
             <GradientButton
+              onClick={() => onOpenCreateMenteeDialog(true)}
               className="w-[184px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
               name="Tambah Data"
               iconClassName="w-6 h-6"
@@ -78,14 +82,31 @@ export default function AdminListMenteePage() {
             />
           </div>
           <AdminListMenteeTable
-            onDeleteMentee={() => {}}
-            onEditMentee={() => {}}
+            onDeleteMentee={onDeleteMentee}
+            onEditMentee={onEditMentee}
             isLoadingGetMentees={isLoadingGetMentees}
             isSuccessGetMentees={isSuccessGetMentees}
             mentees={mentees}
           />
         </div>
       </main>
+      <AdminCreateMenteeDialog
+        onClose={() => {}}
+        onOpenChange={onOpenCreateMenteeDialog}
+        open={isOpenCreateMenteeDialog}
+      />
+      <AdminDeleteMenteeDialog
+        onClose={() => setChoosedMentee(null)}
+        onOpenChange={onOpenDeleteMenteeDialog}
+        open={isOpenDeleteMenteeDialog}
+        mentee={choosedMentee}
+      />
+      <AdminEditMenteeDialog
+        onClose={() => setChoosedMentee(null)}
+        onOpenChange={onOpenEditMenteeDialog}
+        open={isOpenEditMenteeDialog}
+        mentee={choosedMentee}
+      />
     </div>
   )
 }

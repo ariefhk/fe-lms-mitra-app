@@ -89,22 +89,6 @@ export default function AdminDeleteClassDialog({
                     {classes?.name || "-"}
                   </TableCell>
                 </TableRow>
-                {/* <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Guru
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {classes?.teacher?.name || "-"}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Jumlah Murid
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {classes?.studentCount || "-"}
-                  </TableCell>
-                </TableRow> */}
               </TableBody>
             </Table>
           </div>

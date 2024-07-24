@@ -61,6 +61,33 @@ export const seniorMentorApi = protectedApiEndpoint.injectEndpoints({
         { type: "SENIOR_MENTOR", id: "LIST_OF_SENIOR_MENTOR" },
       ],
     }),
+    updateSeniorMentor: builder.mutation({
+      query: (args) => {
+        const updateSeniorMentorFormData = new FormData()
+        updateSeniorMentorFormData.append("name", args?.name)
+        updateSeniorMentorFormData.append("no_telp", args?.no_telp)
+        updateSeniorMentorFormData.append("email", args?.email)
+        updateSeniorMentorFormData.append("username", args?.username)
+        updateSeniorMentorFormData.append("password", args?.password)
+        updateSeniorMentorFormData.append(
+          "profilePicture",
+          args?.profilePicture,
+        )
+        return {
+          url: `senior-mentor/${args?.seniorMentorId}`,
+          method: "PUT",
+          formData: true,
+          body: updateSeniorMentorFormData,
+        }
+      },
+      transformResponse: (response) => {
+        const seniorMentor = response.data
+        return seniorMentor
+      },
+      invalidatesTags: () => [
+        { type: "SENIOR_MENTOR", id: "LIST_OF_SENIOR_MENTOR" },
+      ],
+    }),
     deleteSeniorMentor: builder.mutation({
       query: (args) => ({
         url: `senior-mentor/${args?.seniorMentorId}`,
@@ -86,4 +113,5 @@ export const {
   useFindAllSeniorMentorQuery,
   useCreateSeniorMentorMutation,
   useDeleteSeniorMentorMutation,
+  useUpdateSeniorMentorMutation,
 } = seniorMentorApi
