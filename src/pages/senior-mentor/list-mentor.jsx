@@ -1,9 +1,30 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientInput } from "@/components/common/gradient-input"
 import SeniorMentorListMentorTable from "@/components/table/senior-mentor/list-mentor"
-import { mentorList } from "@/constants/dummy"
+import useInput from "@/hooks/useInput"
+import { useFindMentorBySeniorMentorQuery } from "@/store/api/mentor.api"
+import { getUser } from "@/store/slices/user.slice"
+import { useSelector } from "react-redux"
+
+const initialMentorSearch = {
+  name: "",
+}
 
 export default function SeniorMentorListMentorPage() {
+  const { values: searchMentorValues, onChange: onChangeSearchMentor } =
+    useInput(initialMentorSearch)
+  const user = useSelector(getUser)
+  const {
+    data: mentors,
+    isLoading: isLoadingGetMentors,
+    isSuccess: isSuccessGetMentors,
+  } = useFindMentorBySeniorMentorQuery({
+    seniorMentorId: user?.id,
+    name: searchMentorValues.name,
+  })
+
+  console.log("mentors", mentors)
+
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Mentor" />
@@ -11,15 +32,18 @@ export default function SeniorMentorListMentorPage() {
         <div className="flex flex-col items-end gap-y-8">
           <div className="flex items-center ">
             <GradientInput
+              onChange={onChangeSearchMentor}
+              value={searchMentorValues.name}
+              name="name"
               placeholder="Cari Mentor..."
               inputClassName="text-[15px]"
             />
           </div>
           <SeniorMentorListMentorTable
             onDetailMentor={() => {}}
-            isLoadingGetMentors={false}
-            isSuccessGetMentors={true}
-            mentors={mentorList}
+            isLoadingGetMentors={isLoadingGetMentors}
+            isSuccessGetMentors={isSuccessGetMentors}
+            mentors={mentors}
           />
         </div>
       </main>
