@@ -28,6 +28,36 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+    findAllFinalReportAssignment: builder.query({
+      query: (args) => {
+        return {
+          url: `assignment/class/${args?.classId}/final-report?title=${args.title}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const finalReportAssignment = response?.data
+        return finalReportAssignment
+      },
+      providesTags: () => [
+        { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_ASSIGNMENT" },
+      ],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL FINAL REPORT ASSIGNMENT: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
 
     createAssignment: builder.mutation({
       query: (args) => {
@@ -50,6 +80,29 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [{ type: "ASSIGNMENT", id: "LIST_OF_ASSIGNMENT" }],
     }),
+    createFinalReportAssignment: builder.mutation({
+      query: (args) => {
+        const createAssignmentFormData = new FormData()
+        createAssignmentFormData.append("title", args?.title)
+        createAssignmentFormData.append("description", args?.description)
+        createAssignmentFormData.append("classId", args?.classId)
+        createAssignmentFormData.append("dueDate", args?.dueDate)
+        createAssignmentFormData.append("assignmentFile", args?.assignmentFile)
+        return {
+          url: `assignment/final-report`,
+          method: "POST",
+          formData: true,
+          body: createAssignmentFormData,
+        }
+      },
+      transformResponse: (response) => {
+        const finalReportAssignment = response.data
+        return finalReportAssignment
+      },
+      invalidatesTags: () => [
+        { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_ASSIGNMENT" },
+      ],
+    }),
 
     updateAssignment: builder.mutation({
       query: (args) => {
@@ -70,7 +123,10 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
         const assignment = response.data
         return assignment
       },
-      invalidatesTags: () => [{ type: "ASSIGNMENT", id: "LIST_OF_ASSIGNMENT" }],
+      invalidatesTags: () => [
+        { type: "ASSIGNMENT", id: "LIST_OF_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_ASSIGNMENT" },
+      ],
     }),
 
     deleteAssignment: builder.mutation({
@@ -85,14 +141,16 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
         return true
       },
       invalidatesTags: () => [
-        { type: "MENTOR", id: "LIST_OF_MENTOR" },
         { type: "ASSIGNMENT", id: "LIST_OF_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_ASSIGNMENT" },
       ],
     }),
   }),
 })
 
 export const {
+  useCreateFinalReportAssignmentMutation,
+  useFindAllFinalReportAssignmentQuery,
   useCreateAssignmentMutation,
   useDeleteAssignmentMutation,
   useFindAllAssignmentQuery,
