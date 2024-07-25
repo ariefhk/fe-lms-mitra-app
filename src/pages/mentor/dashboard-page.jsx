@@ -6,7 +6,7 @@ import { FaUsers } from "react-icons/fa"
 export default function MentorDashboardPage() {
   return (
     <div className="flex flex-col">
-      <DashboardHeader title="Dashboard Senior Mentor" />
+      <DashboardHeader title="Dashboard Mentor" />
       <main className="flex flex-1 flex-col items-center gap-4  p-4 lg:gap-8 lg:p-6">
         <h1 className="text-txt24_36  text-color-4 font-semibold">
           Selamat Datang di Halaman Utama MDP

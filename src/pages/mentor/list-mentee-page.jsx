@@ -1,9 +1,29 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientInput } from "@/components/common/gradient-input"
 import MentorListMenteeTable from "@/components/table/mentor/list-mentee"
-import { menteeList } from "@/constants/dummy"
+import useInput from "@/hooks/useInput"
+import { useFindAllMenteeByClassQuery } from "@/store/api/mentee.api"
+import { getUser } from "@/store/slices/user.slice"
+import { useSelector } from "react-redux"
+
+const initialMenteeSearch = {
+  name: "",
+}
 
 export default function MentorListMenteePage() {
+  const user = useSelector(getUser)
+  const { values: searchMenteeValue, onChange: onChangeSearchMentee } =
+    useInput(initialMenteeSearch)
+
+  const {
+    data: mentees,
+    isLoading: isLoadingGetMentees,
+    isSuccess: isSuccessGetMentees,
+  } = useFindAllMenteeByClassQuery({
+    classId: user?.class?.id,
+    name: searchMenteeValue.name,
+  })
+
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Daftar Mentee" />
@@ -11,15 +31,18 @@ export default function MentorListMenteePage() {
         <div className="flex flex-col items-end gap-y-8">
           <div className="flex items-center ">
             <GradientInput
+              onChange={onChangeSearchMentee}
+              value={searchMenteeValue.name}
+              name="name"
               placeholder="Cari Mentee..."
               inputClassName="text-[15px]"
             />
           </div>
           <MentorListMenteeTable
             onDetailMentee={() => {}}
-            isLoadingGetMentees={false}
-            isSuccessGetMentees={true}
-            mentees={menteeList}
+            isLoadingGetMentees={isLoadingGetMentees}
+            isSuccessGetMentees={isSuccessGetMentees}
+            mentees={mentees}
           />
         </div>
       </main>

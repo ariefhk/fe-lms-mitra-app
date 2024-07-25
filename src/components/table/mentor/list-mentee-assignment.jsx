@@ -38,7 +38,7 @@ function MentorMenteeRows({
               Icon={MdOutlineVisibility}
             />
           </TableCell>
-          <TableCell>{c?.due_date || "-"}</TableCell>
+          <TableCell>{c?.dueDate || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
             <Button
               className="bg-green-500 hover:bg-green-600"

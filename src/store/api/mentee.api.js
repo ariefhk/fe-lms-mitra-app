@@ -28,6 +28,36 @@ export const menteeApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+    findAllMenteeByClass: builder.query({
+      query: (args) => {
+        return {
+          url: `mentee/class/${args?.classId}?name=${args.name}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const mentee = response?.data
+        return mentee
+      },
+      providesTags: () => [
+        { type: "MENTEE", id: "LIST_OF_MENTEE_BY_CLASS_ID" },
+      ],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL MENTEE BY CLASS: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
     createMentee: builder.mutation({
       query: (args) => {
         const createMenteeFormData = new FormData()
@@ -53,7 +83,10 @@ export const menteeApi = protectedApiEndpoint.injectEndpoints({
         const mentee = response.data
         return mentee
       },
-      invalidatesTags: () => [{ type: "MENTEE", id: "LIST_OF_MENTEE" }],
+      invalidatesTags: () => [
+        { type: "MENTEE", id: "LIST_OF_MENTEE" },
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+      ],
     }),
     updateMentee: builder.mutation({
       query: (args) => {
@@ -80,7 +113,10 @@ export const menteeApi = protectedApiEndpoint.injectEndpoints({
         const mentee = response.data
         return mentee
       },
-      invalidatesTags: () => [{ type: "MENTEE", id: "LIST_OF_MENTEE" }],
+      invalidatesTags: () => [
+        { type: "MENTEE", id: "LIST_OF_MENTEE" },
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+      ],
     }),
     deleteMentee: builder.mutation({
       query: (args) => ({
@@ -93,12 +129,16 @@ export const menteeApi = protectedApiEndpoint.injectEndpoints({
       transformResponse: () => {
         return true
       },
-      invalidatesTags: () => [{ type: "MENTEE", id: "LIST_OF_MENTEE" }],
+      invalidatesTags: () => [
+        { type: "MENTEE", id: "LIST_OF_MENTEE" },
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+      ],
     }),
   }),
 })
 
 export const {
+  useFindAllMenteeByClassQuery,
   useFindAllMenteeQuery,
   useCreateMenteeMutation,
   useDeleteMenteeMutation,
