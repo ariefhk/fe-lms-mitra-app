@@ -54,7 +54,7 @@ export default function MentorCreateAssignmentDialog({
       dueDate: values.dueDate,
       assignmentFile: values.assignmentFile,
     }
-    // console.log("CREATE TUGAS DATA: ", createAssignmentData)
+    console.log("CREATE TUGAS DATA: ", createAssignmentData)
     try {
       await createAssignment(createAssignmentData).unwrap()
       form.reset()

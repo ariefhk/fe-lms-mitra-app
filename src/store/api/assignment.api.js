@@ -28,6 +28,38 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+
+    findAllMenteeAssignment: builder.query({
+      query: (args) => {
+        return {
+          url: `assignment/mentee/${args?.menteeId}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const assignmentMentee = response?.data
+        return assignmentMentee
+      },
+      providesTags: () => [
+        { type: "ASSIGNMENT", id: "LIST_OF_MENTEE_ASSIGNMENT" },
+      ],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL MENTEE ASSIGNMENT: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
+
     findAllFinalReportAssignment: builder.query({
       query: (args) => {
         return {
@@ -59,6 +91,37 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
       },
     }),
 
+    findAllMenteeFinalReportAssignment: builder.query({
+      query: (args) => {
+        return {
+          url: `assignment/mentee/${args?.menteeId}/final-report`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const finalReportAssignment = response?.data
+        return finalReportAssignment
+      },
+      providesTags: () => [
+        { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_MENTEE_ASSIGNMENT" },
+      ],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL FINAL REPORT MENTEE ASSIGNMENT: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
+
     createAssignment: builder.mutation({
       query: (args) => {
         const createAssignmentFormData = new FormData()
@@ -78,7 +141,10 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
         const assignment = response.data
         return assignment
       },
-      invalidatesTags: () => [{ type: "ASSIGNMENT", id: "LIST_OF_ASSIGNMENT" }],
+      invalidatesTags: () => [
+        { type: "ASSIGNMENT", id: "LIST_OF_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "LIST_OF_MENTEE_ASSIGNMENT" },
+      ],
     }),
     createFinalReportAssignment: builder.mutation({
       query: (args) => {
@@ -101,6 +167,7 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [
         { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_MENTEE_ASSIGNMENT" },
       ],
     }),
 
@@ -126,6 +193,8 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
       invalidatesTags: () => [
         { type: "ASSIGNMENT", id: "LIST_OF_ASSIGNMENT" },
         { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "LIST_OF_MENTEE_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_MENTEE_ASSIGNMENT" },
       ],
     }),
 
@@ -143,12 +212,16 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
       invalidatesTags: () => [
         { type: "ASSIGNMENT", id: "LIST_OF_ASSIGNMENT" },
         { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "LIST_OF_MENTEE_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_MENTEE_ASSIGNMENT" },
       ],
     }),
   }),
 })
 
 export const {
+  useFindAllMenteeAssignmentQuery,
+  useFindAllMenteeFinalReportAssignmentQuery,
   useCreateFinalReportAssignmentMutation,
   useFindAllFinalReportAssignmentQuery,
   useCreateAssignmentMutation,

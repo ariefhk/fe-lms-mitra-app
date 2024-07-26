@@ -2,13 +2,33 @@ import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
 import MentorListNilaiDetailMenteeTable from "@/components/table/mentor/list-mentee-nilai-detail"
 import MentorListNilaiDetailLaporanMenteeTable from "@/components/table/mentor/list-mentee-nilai-detail-laporan-akhir"
+import { menteeFinalReportAsignment } from "@/constants/dummy/mentor-page.dummy"
 import {
-  menteeAssignment,
-  menteeFinalReportAsignment,
-} from "@/constants/dummy/mentor-page.dummy"
+  useFindAllMenteeAssignmentQuery,
+  useFindAllMenteeFinalReportAssignmentQuery,
+} from "@/store/api/assignment.api"
 import { IoMdAdd } from "react-icons/io"
+import { useParams } from "react-router-dom"
 
 export default function MentorListMenteeNilaiDetailPage() {
+  const { menteeId } = useParams()
+
+  const {
+    data: menteeAssignments,
+    isLoading: isLoadingGetMenteeAssignments,
+    isSuccess: isSuccessGetMenteeAsignments,
+  } = useFindAllMenteeAssignmentQuery({
+    menteeId: menteeId,
+  })
+
+  const {
+    data: menteeFinalReportAssignments,
+    isLoading: isLoadingGetMenteeFinalReportAssignments,
+    isSuccess: isSuccessGetMenteeFinalReportAsignments,
+  } = useFindAllMenteeFinalReportAssignmentQuery({
+    menteeId: menteeId,
+  })
+
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Detail Nilai Mentee" />
@@ -36,19 +56,23 @@ export default function MentorListMenteeNilaiDetailPage() {
           <div className="space-y-2">
             <h1 className="text-txt20_30 font-semibold">Laporan Akhir :</h1>
             <MentorListNilaiDetailLaporanMenteeTable
-              isLoadingGetMenteeAssignments={false}
-              isSuccessGetMenteeAssignments={true}
+              isLoadingGetMenteeAssignments={
+                isLoadingGetMenteeFinalReportAssignments
+              }
+              isSuccessGetMenteeAssignments={
+                isSuccessGetMenteeFinalReportAsignments
+              }
               onEditMenteeAssigment={() => {}}
-              menteeAssignments={menteeFinalReportAsignment}
+              menteeAssignments={menteeFinalReportAssignments}
             />
           </div>
           <div className="space-y-2">
             <h1 className="text-txt20_30 font-semibold">Daftar Tugas :</h1>
             <MentorListNilaiDetailMenteeTable
-              isLoadingGetMenteeAssignments={false}
-              isSuccessGetMenteeAssignments={true}
               onEditMenteeAssigment={() => {}}
-              menteeAssignments={menteeAssignment}
+              isLoadingGetMenteeAssignments={isLoadingGetMenteeAssignments}
+              isSuccessGetMenteeAssignments={isSuccessGetMenteeAsignments}
+              menteeAssignments={menteeAssignments}
             />
           </div>
         </div>
