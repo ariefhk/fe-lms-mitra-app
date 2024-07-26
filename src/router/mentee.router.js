@@ -5,6 +5,7 @@ import MenteeInformasiNilaiPage from "@/pages/mentee/informasi-nilai-page"
 import MenteeListLaporanAkhirPage from "@/pages/mentee/list-laporan-akhir-page"
 import MenteeListTugasPage from "@/pages/mentee/list-tugas-page"
 import MenteeProfilePage from "@/pages/mentee/profile-page"
+import MenteeTugasDetailPage from "@/pages/mentee/tugas-detail-page"
 
 export const menteeRouter = [
   {
@@ -36,8 +37,12 @@ export const menteeRouter = [
         path: "tugas",
         children: [
           {
-            path: "list",
+            index: true,
             Component: MenteeListTugasPage,
+          },
+          {
+            path: ":assignmentId",
+            Component: MenteeTugasDetailPage,
           },
           {
             path: "laporan-akhir",

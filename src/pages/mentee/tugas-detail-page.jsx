@@ -1,11 +1,6 @@
 import DashboardHeader from "@/components/common/dashboard-header"
-import { GradientButton } from "@/components/common/gradient-button"
-import { GradientInput } from "@/components/common/gradient-input"
-import MentorListAssignmentMenteeTable from "@/components/table/mentor/list-mentee-assignment"
-import { assignmenList } from "@/constants/dummy/mentor-page.dummy"
-import { IoMdAdd } from "react-icons/io"
-import { MdAssignmentLate, MdAssignmentTurnedIn } from "react-icons/md"
-import { Link } from "react-router-dom"
+import { MdAssignmentTurnedIn } from "react-icons/md"
+import { Link, useParams } from "react-router-dom"
 
 function MenteeListTask() {
   return Array.from({ length: 5 }).map((_, index) => {
@@ -26,7 +21,9 @@ function MenteeListTask() {
   })
 }
 
-export default function MenteeListTugasPage() {
+export default function MenteeTugasDetailPage() {
+  const { assignmentId } = useParams()
+
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Daftar Tugas" />

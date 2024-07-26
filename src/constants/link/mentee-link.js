@@ -47,7 +47,7 @@ export const MENTEE_LINK = [
         id: 7,
         name: "Tugas",
         icon: FaTasks,
-        href: "/mentee/tugas/list",
+        href: "/mentee/tugas",
       },
       {
         id: 8,
