@@ -1,41 +1,72 @@
 import DashboardHeader from "@/components/common/dashboard-header"
-import { GradientButton } from "@/components/common/gradient-button"
 import MentorEditMenteeAssignmentDialog from "@/components/dialog/mentor/edit-mentee-assignment-dialog"
+import MentorEditMenteeFinalReportAssignmentDialog from "@/components/dialog/mentor/edit-mentee-final-report-assignment-dialog"
 import MentorListNilaiDetailMenteeTable from "@/components/table/mentor/list-mentee-nilai-detail"
 import MentorListNilaiDetailLaporanMenteeTable from "@/components/table/mentor/list-mentee-nilai-detail-laporan-akhir"
 import useDialog from "@/hooks/useDialog"
 import {
+  useFindAllFinalReportMenteeAssignmentQuery,
   useFindAllMenteeAssignmentQuery,
   useFindCalculateMenteeAssignmentGradeQuery,
 } from "@/store/api/assignment.api"
+import { useFindMenteeByIdQuery } from "@/store/api/mentee.api"
 import { useState } from "react"
-// import { menteeFinalReportAsignment } from "@/constants/dummy/mentor-page.dummy"
-// import {
-//   useFindAllMenteeAssignmentQuery,
-//   useFindAllMenteeFinalReportAssignmentQuery,
-// } from "@/store/api/assignment.api"
-import { IoMdAdd } from "react-icons/io"
 import { useParams } from "react-router-dom"
 
 export default function MentorListMenteeNilaiDetailPage() {
   const { menteeId } = useParams()
   const [choosedAssignment, setChoosedAssignment] = useState(null)
+
   const {
     isOpenDialog: isOpenEditMenteeAssignmentDialog,
     onOpenDialog: onOpenEditMenteeAssignmentDialog,
   } = useDialog()
+
+  const {
+    isOpenDialog: isOpenEditMenteeFinalReportAssignmentDialog,
+    onOpenDialog: onOpenEditMenteeFinalReportAssignmentDialog,
+  } = useDialog()
+
+  const { data: mentee, isSuccess: isSuccessGetMentee } =
+    useFindMenteeByIdQuery(
+      {
+        menteeId: menteeId,
+      },
+      {
+        skip: !menteeId,
+      },
+    )
+
   const {
     data: calculatedMenteeAssignments,
     isSuccess: isSuccessGetCalculatedMenteeAsignments,
-  } = useFindCalculateMenteeAssignmentGradeQuery({
-    menteeId: menteeId,
-  })
+  } = useFindCalculateMenteeAssignmentGradeQuery(
+    {
+      menteeId: menteeId,
+    },
+    {
+      skip: !menteeId,
+    },
+  )
 
   const {
     data: menteeAssignments,
     isLoading: isLoadingGetMenteeAssignments,
-    isSuccess: isSuccessGetMenteeAsignments,
-  } = useFindAllMenteeAssignmentQuery({
+    isSuccess: isSuccessGetMenteeAssignments,
+  } = useFindAllMenteeAssignmentQuery(
+    {
+      menteeId: menteeId,
+    },
+    {
+      skip: !menteeId,
+    },
+  )
+
+  const {
+    data: menteeFinalReportAssignments,
+    isLoading: isLoadingGetMenteeFinalReportAssignments,
+    isSuccess: isSuccessGetMenteeFinalReportAssignments,
+  } = useFindAllFinalReportMenteeAssignmentQuery({
     menteeId: menteeId,
   })
 
@@ -43,16 +74,10 @@ export default function MentorListMenteeNilaiDetailPage() {
     setChoosedAssignment(assignment)
     onOpenEditMenteeAssignmentDialog(true)
   }
-
-  console.log(menteeAssignments)
-
-  // const {
-  //   data: menteeFinalReportAssignments,
-  //   isLoading: isLoadingGetMenteeFinalReportAssignments,
-  //   isSuccess: isSuccessGetMenteeFinalReportAsignments,
-  // } = useFindAllMenteeFinalReportAssignmentQuery({
-  //   menteeId: menteeId,
-  // })
+  function onEditMenteeFinalReportAssignment(assignment) {
+    setChoosedAssignment(assignment)
+    onOpenEditMenteeFinalReportAssignmentDialog(true)
+  }
 
   return (
     <div className="flex flex-col">
@@ -61,10 +86,10 @@ export default function MentorListMenteeNilaiDetailPage() {
         <div className="flex flex-col items-start gap-y-8">
           <div className="flex items-center justify-between w-full">
             <div className="flex flex-col  text-txt18_20 gap-y-5">
-              <h1>Nama : Arief Rachman Hakim</h1>
-              <p>Email: arief@gmail.com</p>
-              <p>No. Telp: 08123456789</p>
-              <p>Batch: 1</p>
+              <h1>Nama : {isSuccessGetMentee ? mentee?.name : "_"}</h1>
+              <p>Email: {isSuccessGetMentee ? mentee?.email : "_"}</p>
+              <p>No. Telp: {isSuccessGetMentee ? mentee?.no_telp : "_"}</p>
+              <p>Batch: {isSuccessGetMentee ? mentee?.batch : "_"}</p>
             </div>
           </div>
           <div>
@@ -77,26 +102,25 @@ export default function MentorListMenteeNilaiDetailPage() {
               </span>
             </h1>
           </div>
-          {/* <div className="space-y-2">
+          <div className="space-y-2">
             <h1 className="text-txt20_30 font-semibold">Laporan Akhir :</h1>
             <MentorListNilaiDetailLaporanMenteeTable
               isLoadingGetMenteeAssignments={
                 isLoadingGetMenteeFinalReportAssignments
               }
               isSuccessGetMenteeAssignments={
-                isSuccessGetMenteeFinalReportAsignments
+                isSuccessGetMenteeFinalReportAssignments
               }
-              onEditMenteeAssigment={() => {}}
+              onEditMenteeAssigment={onEditMenteeFinalReportAssignment}
               menteeAssignments={menteeFinalReportAssignments}
             />
           </div>
-           */}
           <div className="space-y-2">
             <h1 className="text-txt20_30 font-semibold">Daftar Tugas :</h1>
             <MentorListNilaiDetailMenteeTable
               onEditMenteeAssigment={onEditMenteeAssignment}
               isLoadingGetMenteeAssignments={isLoadingGetMenteeAssignments}
-              isSuccessGetMenteeAssignments={isSuccessGetMenteeAsignments}
+              isSuccessGetMenteeAssignments={isSuccessGetMenteeAssignments}
               menteeAssignments={menteeAssignments}
             />
           </div>
@@ -108,6 +132,13 @@ export default function MentorListMenteeNilaiDetailPage() {
         onClose={() => setChoosedAssignment(null)}
         onOpenChange={onOpenEditMenteeAssignmentDialog}
         open={isOpenEditMenteeAssignmentDialog}
+      />
+      <MentorEditMenteeFinalReportAssignmentDialog
+        assignmentId={choosedAssignment?.assignment?.id}
+        menteeId={menteeId}
+        onClose={() => setChoosedAssignment(null)}
+        onOpenChange={onOpenEditMenteeFinalReportAssignmentDialog}
+        open={isOpenEditMenteeFinalReportAssignmentDialog}
       />
     </div>
   )

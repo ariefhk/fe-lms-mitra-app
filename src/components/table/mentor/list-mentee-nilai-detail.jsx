@@ -14,7 +14,7 @@ import { translateAssignmentStatus } from "@/lib/translate-assignment-status"
 import PropTypes from "prop-types"
 import { MdOutlineVisibility } from "react-icons/md"
 
-function translateAssignmentStatusStyle(status) {
+export function translateAssignmentStatusStyle(status) {
   switch (status) {
     case "UNCOMPLETED":
       return "text-rose-600"

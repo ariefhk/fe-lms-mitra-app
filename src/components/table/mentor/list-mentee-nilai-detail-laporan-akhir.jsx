@@ -8,8 +8,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { cn } from "@/lib/class-merge"
+import { formattedDate } from "@/lib/date"
+import {
+  translateAssignmentStatus,
+  translateFinalReportAssignmentStatus,
+} from "@/lib/translate-assignment-status"
 import PropTypes from "prop-types"
 import { MdOutlineVisibility } from "react-icons/md"
+import { translateAssignmentStatusStyle } from "./list-mentee-nilai-detail"
 
 function MentorMenteeRows({
   menteeAssignments,
@@ -37,12 +44,19 @@ function MentorMenteeRows({
               Icon={MdOutlineVisibility}
             />
           </TableCell>
-          <TableCell>{c?.assignment?.due_date || "-"}</TableCell>
-          <TableCell>{c?.status || "-"}</TableCell>
-          <TableCell>{c?.score || "-"}</TableCell>
+          <TableCell>
+            {formattedDate(c?.assignment?.dueDate, true) || "-"}
+          </TableCell>
+          <TableCell
+            className={cn(
+              "font-bold",
+              translateAssignmentStatusStyle(c?.status),
+            )}>
+            {translateFinalReportAssignmentStatus(c?.status) || "-"}
+          </TableCell>
           <TableCell>
             <GradientLink
-              to={c?.fileAnswerUrl || "#"}
+              to={c?.assignment?.fileUrl || "#"}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"
               Icon={MdOutlineVisibility}
@@ -50,13 +64,14 @@ function MentorMenteeRows({
           </TableCell>
           <TableCell className="flex gap-x-2">
             <Button
+              disabled={c?.status === "UNCOMPLETED"}
               className="bg-green-500 hover:bg-green-600"
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
                 onEditMenteeAssigment(c)
               }}>
-              Edit
+              Periksa Laporan
             </Button>
           </TableCell>
         </TableRow>
@@ -71,7 +86,7 @@ function MentorMenteeRows({
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="font-medium">-</TableCell>
-          <TableCell className="font-medium">-</TableCell>
+
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="flex gap-x-2">
             <div className="w-max flex gap-x-2 h-[40px] px-5 bg-gray-300 animate-pulse" />
@@ -107,7 +122,7 @@ export default function MentorListNilaiDetailLaporanMenteeTable({
           <TableHead className="w-[200px] text-white">File Tugas</TableHead>
           <TableHead className="w-[200px] text-white">Tenggat</TableHead>
           <TableHead className="w-[200px] text-white">Status</TableHead>
-          <TableHead className="w-[200px] text-white">Score</TableHead>
+
           <TableHead className="w-[200px] text-white">File Jawaban</TableHead>
           <TableHead className="w-[200px] text-white">Aksi</TableHead>
         </TableRow>

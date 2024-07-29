@@ -10,3 +10,16 @@ export function translateAssignmentStatus(status) {
       return "Sudah Dinilai"
   }
 }
+
+export function translateFinalReportAssignmentStatus(status) {
+  switch (status) {
+    case "UNCOMPLETED":
+      return "Belum Dikumpulkan"
+    case "PENDING":
+      return "Menunggu Review"
+    case "REVISION":
+      return "Perlu Revisi"
+    case "COMPLETED":
+      return "Sudah Memenuhi"
+  }
+}

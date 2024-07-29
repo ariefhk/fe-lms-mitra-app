@@ -186,6 +186,7 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
           menteeId: args?.menteeId,
           assignmentId: args?.assignmentId,
           status: args?.status,
+          description: args?.description,
         },
       }),
       transformResponse: (response) => {

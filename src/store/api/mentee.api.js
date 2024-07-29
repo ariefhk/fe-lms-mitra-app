@@ -3,6 +3,31 @@ import { protectedApiEndpoint } from "./instance"
 
 export const menteeApi = protectedApiEndpoint.injectEndpoints({
   endpoints: (builder) => ({
+    findMenteeById: builder.query({
+      query: (args) => {
+        return {
+          url: `mentee/${args?.menteeId}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const mentee = response?.data
+        return mentee
+      },
+      providesTags: () => [{ type: "MENTEE", id: "MENTEE_BY_ID" }],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log("LOGG ERROR ON QUERYSTARTED GET MENTEE BY ID: ", error)
+        }
+        dispatch(hideLoading())
+      },
+    }),
     findAllMentee: builder.query({
       query: (args) => {
         return {
@@ -138,6 +163,7 @@ export const menteeApi = protectedApiEndpoint.injectEndpoints({
 })
 
 export const {
+  useFindMenteeByIdQuery,
   useFindAllMenteeByClassQuery,
   useFindAllMenteeQuery,
   useCreateMenteeMutation,
