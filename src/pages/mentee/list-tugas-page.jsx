@@ -51,7 +51,11 @@ export function MenteeAssignmentList({
     assignmentList = assignments.map((assgn, index) => {
       return (
         <Link
-          to={`/mentee/tugas/${assgn?.assignment?.id}`}
+          to={
+            isFinalReport
+              ? `/mentee/tugas/${assgn?.assignment?.id}/laporan-akhir`
+              : `/mentee/tugas/${assgn?.assignment?.id}`
+          }
           key={index + 1}
           className="group border max-w-[800px] rounded-lg h-[50px] p-3 hover:bg-color-1 bg-none text-cyan-500 hover:text-white flex items-center justify-between cursor-pointer">
           <div className="flex items-center gap-x-3">

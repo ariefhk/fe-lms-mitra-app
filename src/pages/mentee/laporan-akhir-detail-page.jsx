@@ -44,7 +44,7 @@ export function AssignmentDetailStatus({ status }) {
   }
 }
 
-export default function MenteeTugasDetailPage() {
+export default function MenteeFinalReportDetailPage() {
   const { assignmentId } = useParams()
   const user = useSelector(getUser)
   const inputRef = useRef(null)
@@ -105,10 +105,12 @@ export default function MenteeTugasDetailPage() {
 
   return (
     <div className="h-full">
-      <DashboardHeader title="Mengumpulkan Tugas" />
+      <DashboardHeader title="Mengumpulkan Laporan Akhir" />
       <main className="flex flex-1 flex-col  p-4 lg:gap-10 lg:p-6">
         <div className="space-y-5">
-          <h1 className="font-semibold text-txt18_20">Detail Tugas Anda</h1>
+          <h1 className="font-semibold text-txt18_20">
+            Detail Laporan Akhir Anda
+          </h1>
           {isSuccessGetMenteeAssignmentDetail && (
             <div className="space-y-1 ">
               <h1>Nama : {menteeAssignmentDetail?.assignment?.title}</h1>
@@ -129,15 +131,12 @@ export default function MenteeTugasDetailPage() {
                   />
                 }
               </h1>
-              <h1>
-                Nilai : <span className="text-txt18_20 font-semibold">{0}</span>
-              </h1>
             </div>
           )}
           <div className="flex items-center gap-x-5">
             <GradientButton
-              className="w-[240px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
-              name="Download File Tugas"
+              className="w-[360px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
+              name="Download Ketentuan Laporan Akhir"
               iconClassName="w-6 h-6"
               Icon={FaCloudDownloadAlt}
             />
@@ -154,7 +153,7 @@ export default function MenteeTugasDetailPage() {
                     onClick={() => {
                       inputRef.current?.click()
                     }}>
-                    Pilih File Tugas
+                    Pilih File Laporan Akhir
                   </button>
                   {files && (
                     <div className="flex items-center gap-x-2">
@@ -211,8 +210,8 @@ export default function MenteeTugasDetailPage() {
             }}
             isLoading={isLoadingSubmitMenteeAssignment}
             isDisabled={!files}
-            className="w-[180px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
-            name="Upload Tugas"
+            className="w-[240px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
+            name="Upload Laporan Akhir"
             iconClassName="w-6 h-6"
             Icon={IoMdAdd}
           />
