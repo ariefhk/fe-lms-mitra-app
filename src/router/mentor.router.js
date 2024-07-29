@@ -1,4 +1,5 @@
 import MentorLayout from "@/layouts/common/mentor-layout"
+import MentorCreatePresencePage from "@/pages/mentor/create-presence-page"
 import MentorDashboardPage from "@/pages/mentor/dashboard-page"
 import MentorListAbsensiPage from "@/pages/mentor/list-absensi-page"
 import MentorListAssignment from "@/pages/mentor/list-assignment-page"
@@ -31,6 +32,10 @@ export const mentorRouter = [
           {
             path: "absensi",
             Component: MentorListAbsensiPage,
+          },
+          {
+            path: "absensi/:classId/buat",
+            Component: MentorCreatePresencePage,
           },
           {
             path: "nilai",

@@ -49,7 +49,7 @@ export function getAllWeeksInMonth(year, month) {
 
     let day = new Date(currentWeekStart)
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 5; i++) {
       // Collect Monday to Saturday
       week.push(new Date(day))
       day.setUTCDate(day.getUTCDate() + 1)
@@ -91,7 +91,7 @@ export function getWeekMonToSaturdayDates(year, month, week) {
   let dates = []
 
   // Push Monday to Saturday of that week into the array
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 6; i++) {
     // Iterate from Monday to Sunday
     if (firstDay.getUTCDay() >= 1 && firstDay.getUTCDay() <= 6) {
       // Check if it's Monday to Saturday
