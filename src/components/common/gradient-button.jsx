@@ -4,11 +4,14 @@ import { BsArrowRepeat } from "react-icons/bs"
 import { Button } from "../ui/button"
 
 const GradientButton = React.forwardRef(
-  ({ name, isLoading, Icon, className, iconClassName, ...props }, ref) => {
+  (
+    { name, isLoading, Icon, isDisabled, className, iconClassName, ...props },
+    ref,
+  ) => {
     return (
       <Button
         {...props}
-        disabled={isLoading}
+        disabled={isLoading || isDisabled}
         ref={ref}
         variant="plain"
         className={cn(

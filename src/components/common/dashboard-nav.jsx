@@ -1,6 +1,7 @@
 import { Separator } from "@/components/ui/separator"
 import useIsSublinkActive from "@/hooks/useIsSublinkActive"
 import { cn } from "@/lib/class-merge"
+import Proptypes from "prop-types"
 import { useState } from "react"
 import { IoIosArrowDown } from "react-icons/io"
 import { Link } from "react-router-dom"
@@ -31,7 +32,7 @@ export default function DashboardNav({ dashLinks }) {
             <img
               src="/images/logo-black.png"
               alt=""
-              className="w-[120px] h-[60px] flex-shrink-0"
+              className="w-[140px] h-[70px] flex-shrink-0"
             />
             <span className="block  bg-gradient-to-r from-cyan-400  to-purple-900 text-transparent bg-clip-text">
               Mobile Development
@@ -156,4 +157,8 @@ export default function DashboardNav({ dashLinks }) {
       </div>
     </div>
   )
+}
+
+DashboardNav.propTypes = {
+  dashLinks: Proptypes.array.isRequired,
 }

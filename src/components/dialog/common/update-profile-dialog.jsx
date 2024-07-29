@@ -19,75 +19,76 @@ import {
 import { Input, PasswordInput } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { getImageURL } from "@/lib/getImage"
-import { useUpdateSeniorMentorMutation } from "@/store/api/senior-mentor.api"
+import { useUpdateCurrentUserMutation } from "@/store/api/user.api"
 import PropTypes from "prop-types"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminEditSeniorMentorDialog({
+export default function UpdateProfileDialog({
   open = false,
   onOpenChange,
   onClose,
-  seniorMentor,
+  user,
 }) {
   const [previewProfilePicture, setPreviewProfilePicture] = useState(null)
-  const [updateSeniorMentor, { isLoading: isLoadingUpdateSeniorMentor }] =
-    useUpdateSeniorMentorMutation()
+  const [updateCurrentUser, { isLoading: isLoadingUpdateCurrentUser }] =
+    useUpdateCurrentUserMutation()
 
   const form = useForm({
     defaultValues: {
+      username: "",
+      password: "",
       name: "",
       email: "",
       no_telp: "",
-      username: "",
-      password: "",
       profilePicture: "",
     },
   })
 
   useEffect(() => {
     form.reset({
-      name: seniorMentor?.name,
-      email: seniorMentor?.email,
-      no_telp: seniorMentor?.no_telp,
-      username: seniorMentor?.username,
+      username: user?.username,
+      name: user?.name,
+      email: user?.email,
+      no_telp: user?.no_telp,
     })
-    if (seniorMentor?.profilePicture) {
-      setPreviewProfilePicture(getImageURL(seniorMentor?.profilePicture))
+    if (user?.profilePicture) {
+      setPreviewProfilePicture(getImageURL(user?.profilePicture))
     }
-  }, [form, seniorMentor])
+  }, [user, form])
 
   const isFormValueChanged = form.formState.isDirty
 
   async function onSubmit(values) {
-    const updateSeniorMentorData = {
-      seniorMentorId: seniorMentor?.id,
+    const updateProfileData = {
+      username: values.username,
+      password: values.password,
       name: values.name,
       no_telp: values.no_telp,
       email: values.email,
-      username: values.username,
-      password: values.password,
       profilePicture: values.profilePicture,
     }
+
+    console.log("UPDATE PROFILE DATA: ", updateProfileData)
     try {
-      await updateSeniorMentor(updateSeniorMentorData).unwrap()
+      await updateCurrentUser(updateProfileData).unwrap()
       form.reset()
       onOpenChange(false)
       Swal.fire({
         icon: "success",
-        title: "Berhasil Update Senior Mentor!",
-        text: "Selamat Anda berhasil mengupdate senior mentor!",
+        title: "Berhasil Update Profile!",
+        text: "Selamat Anda berhasil mengupdate profile!",
         showConfirmButton: false,
         timer: 1500,
       })
     } catch (error) {
-      console.log("ERROR UPDATE SENIOR MENTOR: ", error)
+      console.log("ERROR UPDATE PROFILE: ", error)
       Swal.fire({
         icon: "error",
-        title: "Gagal Update Senior Mentor!",
-        text: "Maaf, Anda gagal update senior mentor!",
+        title: "Gagal Update Profile!",
+        text: "Maaf, Anda gagal update profile!",
         showConfirmButton: false,
         timer: 1500,
       })
@@ -97,71 +98,20 @@ export default function AdminEditSeniorMentorDialog({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
         <AlertDialogDescription className="sr-only">
-          This action is for adding senior mentor.
+          This action is for update profile.
         </AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
             <span className="text-txt24_36 font-medium  text-color-6">
-              Update Data Senior Mentor
+              Update Profile
             </span>
             <Separator />
           </AlertDialogTitle>
           <Form {...form}>
             <form
-              id="add-senior-mentor-form"
+              id="update-profile-form"
               onSubmit={form.handleSubmit(onSubmit)}
               className="overflow-auto py-2  w-full px-2 space-y-6 text-start">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nama</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="Masukan nama senior mentor"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Masukan email senior mentor"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="no_telp"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>No Telepon</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="Masukan no telp senior mentor"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               {previewProfilePicture && (
                 <img
                   src={previewProfilePicture}
@@ -226,6 +176,57 @@ export default function AdminEditSeniorMentorDialog({
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nama</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Masukan nama senior mentor"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="Masukan email senior mentor"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="no_telp"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>No Telepon</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Masukan no telp senior mentor"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </form>
           </Form>
         </AlertDialogHeader>
@@ -242,11 +243,11 @@ export default function AdminEditSeniorMentorDialog({
             </Button>
           </AlertDialogCancel>
           <Button
-            disabled={isLoadingUpdateSeniorMentor || !isFormValueChanged}
-            form="add-senior-mentor-form"
+            disabled={isLoadingUpdateCurrentUser || !isFormValueChanged}
+            form="update-profile-form"
             type="submit"
             className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
-            {isLoadingUpdateSeniorMentor && (
+            {isLoadingUpdateCurrentUser && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}
             Simpan
@@ -257,9 +258,9 @@ export default function AdminEditSeniorMentorDialog({
   )
 }
 
-AdminEditSeniorMentorDialog.propTypes = {
+UpdateProfileDialog.propTypes = {
   open: PropTypes.bool,
   onOpenChange: PropTypes.func,
   onClose: PropTypes.func,
-  seniorMentor: PropTypes.object,
+  user: PropTypes.object,
 }

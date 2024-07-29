@@ -3,32 +3,60 @@ import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
 import MentorListAssignmentMenteeTable from "@/components/table/mentor/list-mentee-assignment"
 import { assignmenList } from "@/constants/dummy/mentor-page.dummy"
-import { IoMdAdd } from "react-icons/io"
+import { useFindAllFinalReportMenteeAssignmentQuery } from "@/store/api/assignment.api"
+import { getUser } from "@/store/slices/user.slice"
+import { useSelector } from "react-redux"
+import { MenteeAssignmentList } from "./list-tugas-page"
 
 export default function MenteeListLaporanAkhirPage() {
+  const user = useSelector(getUser)
+
+  const {
+    data: finalReportMenteeAssignments,
+    isLoading: isLoadingGetFinalReportMenteeAssignments,
+    isSuccess: isSuccessGetFinalReportMenteeAssignments,
+  } = useFindAllFinalReportMenteeAssignmentQuery(
+    {
+      menteeId: user.id,
+    },
+    {
+      skip: !user.id,
+    },
+  )
+
+  console.log(finalReportMenteeAssignments)
+
   return (
     <div className="flex flex-col">
-      <DashboardHeader title="Daftar Tugas" />
+      <DashboardHeader title="Tugas Laporan Akhir" />
       <main className="flex flex-1 flex-col  gap-4  p-4 lg:gap-8 lg:p-6">
-        <div className="flex flex-col items-end gap-y-8">
-          <div className="flex items-center ">
-            <GradientButton
-              className="w-[184px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
-              name="Tambah Data"
-              iconClassName="w-6 h-6"
-              Icon={IoMdAdd}
-            />
-            <GradientInput
-              placeholder="Cari Tugas..."
-              inputClassName="text-[15px]"
-            />
+        <div className="space-y-5">
+          <div className="space-y-1 font-base">
+            <h1>
+              Semua laporan akhir di kumpulkan sebelum program studi independen
+              berakhir.
+            </h1>
+            <p>
+              Berikut laporan yang harus dikerjakan ketika program berlangsung:
+            </p>
           </div>
-          <MentorListAssignmentMenteeTable
-            onDeleteAssigment={() => {}}
-            onEditAssigment={() => {}}
-            isLoadingGetAssignments={false}
-            isSuccessGetAssignments={true}
-            assignments={assignmenList}
+          <p className="font-semibold text-txt18_20">
+            Kamu mempunyai{" "}
+            <span className="underline underline-offset-4 pr-1">
+              {" "}
+              {isSuccessGetFinalReportMenteeAssignments
+                ? finalReportMenteeAssignments.length
+                : 0}
+            </span>
+            Laporan Akhir yang harus dikumpulkan:
+          </p>
+        </div>
+        <div className="flex flex-col  gap-y-5">
+          <MenteeAssignmentList
+            isFinalReport={true}
+            assignments={finalReportMenteeAssignments}
+            isLoadingGetAssignments={isLoadingGetFinalReportMenteeAssignments}
+            isSuccessGetAssignments={isSuccessGetFinalReportMenteeAssignments}
           />
         </div>
       </main>

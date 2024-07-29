@@ -20,6 +20,7 @@ export const authApiSlice = apiEndpoint.injectEndpoints({
         const user = response?.data
         return user
       },
+      invalidatesTags: () => [{ type: "USER", id: "CURRENT_USER" }],
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         dispatch(showLoading())
         try {

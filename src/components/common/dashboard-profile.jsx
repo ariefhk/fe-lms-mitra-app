@@ -1,3 +1,4 @@
+import Proptypes from "prop-types"
 import { Separator } from "../ui/separator"
 
 export default function DashboardProfile({
@@ -13,7 +14,7 @@ export default function DashboardProfile({
         <img
           src={imageUrl}
           alt=""
-          className="w-[300px] h-[300px] object-cover"
+          className="w-[300px] h-[300px] rounded-full object-cover"
         />
         <div className="text-wrap space-y-5">
           <h1 className="text-txt30_40 text-color-4 font-medium">{name}</h1>
@@ -34,4 +35,12 @@ export default function DashboardProfile({
       </div>
     </div>
   )
+}
+
+DashboardProfile.propTypes = {
+  imageUrl: Proptypes.string,
+  name: Proptypes.string,
+  email: Proptypes.string,
+  no_telp: Proptypes.string,
+  senior_mentor: Proptypes.string,
 }
