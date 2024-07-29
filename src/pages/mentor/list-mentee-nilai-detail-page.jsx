@@ -1,7 +1,14 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
+import MentorEditMenteeAssignmentDialog from "@/components/dialog/mentor/edit-mentee-assignment-dialog"
 import MentorListNilaiDetailMenteeTable from "@/components/table/mentor/list-mentee-nilai-detail"
 import MentorListNilaiDetailLaporanMenteeTable from "@/components/table/mentor/list-mentee-nilai-detail-laporan-akhir"
+import useDialog from "@/hooks/useDialog"
+import {
+  useFindAllMenteeAssignmentQuery,
+  useFindCalculateMenteeAssignmentGradeQuery,
+} from "@/store/api/assignment.api"
+import { useState } from "react"
 // import { menteeFinalReportAsignment } from "@/constants/dummy/mentor-page.dummy"
 // import {
 //   useFindAllMenteeAssignmentQuery,
@@ -12,14 +19,32 @@ import { useParams } from "react-router-dom"
 
 export default function MentorListMenteeNilaiDetailPage() {
   const { menteeId } = useParams()
+  const [choosedAssignment, setChoosedAssignment] = useState(null)
+  const {
+    isOpenDialog: isOpenEditMenteeAssignmentDialog,
+    onOpenDialog: onOpenEditMenteeAssignmentDialog,
+  } = useDialog()
+  const {
+    data: calculatedMenteeAssignments,
+    isSuccess: isSuccessGetCalculatedMenteeAsignments,
+  } = useFindCalculateMenteeAssignmentGradeQuery({
+    menteeId: menteeId,
+  })
 
-  // const {
-  //   data: menteeAssignments,
-  //   isLoading: isLoadingGetMenteeAssignments,
-  //   isSuccess: isSuccessGetMenteeAsignments,
-  // } = useFindAllMenteeAssignmentQuery({
-  //   menteeId: menteeId,
-  // })
+  const {
+    data: menteeAssignments,
+    isLoading: isLoadingGetMenteeAssignments,
+    isSuccess: isSuccessGetMenteeAsignments,
+  } = useFindAllMenteeAssignmentQuery({
+    menteeId: menteeId,
+  })
+
+  function onEditMenteeAssignment(assignment) {
+    setChoosedAssignment(assignment)
+    onOpenEditMenteeAssignmentDialog(true)
+  }
+
+  console.log(menteeAssignments)
 
   // const {
   //   data: menteeFinalReportAssignments,
@@ -41,16 +66,15 @@ export default function MentorListMenteeNilaiDetailPage() {
               <p>No. Telp: 08123456789</p>
               <p>Batch: 1</p>
             </div>
-            <GradientButton
-              className="w-[184px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
-              name="Edit Nilai"
-              iconClassName="w-6 h-6"
-              Icon={IoMdAdd}
-            />
           </div>
           <div>
             <h1 className="text-txt20_30 font-semibold">
-              Nilai Akhir : <span className="text-txt36_40">80</span>
+              Nilai Akhir :{" "}
+              <span className="text-txt36_40">
+                {isSuccessGetCalculatedMenteeAsignments
+                  ? calculatedMenteeAssignments?.totalGrade
+                  : "_"}
+              </span>
             </h1>
           </div>
           {/* <div className="space-y-2">
@@ -66,17 +90,25 @@ export default function MentorListMenteeNilaiDetailPage() {
               menteeAssignments={menteeFinalReportAssignments}
             />
           </div>
+           */}
           <div className="space-y-2">
             <h1 className="text-txt20_30 font-semibold">Daftar Tugas :</h1>
             <MentorListNilaiDetailMenteeTable
-              onEditMenteeAssigment={() => {}}
+              onEditMenteeAssigment={onEditMenteeAssignment}
               isLoadingGetMenteeAssignments={isLoadingGetMenteeAssignments}
               isSuccessGetMenteeAssignments={isSuccessGetMenteeAsignments}
               menteeAssignments={menteeAssignments}
             />
-          </div> */}
+          </div>
         </div>
       </main>
+      <MentorEditMenteeAssignmentDialog
+        assignmentId={choosedAssignment?.assignment?.id}
+        menteeId={menteeId}
+        onClose={() => setChoosedAssignment(null)}
+        onOpenChange={onOpenEditMenteeAssignmentDialog}
+        open={isOpenEditMenteeAssignmentDialog}
+      />
     </div>
   )
 }

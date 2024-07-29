@@ -5,11 +5,23 @@ import { Link } from "react-router-dom"
 import { Button } from "../ui/button"
 
 const GradientLink = React.forwardRef(
-  ({ name, to, isLoading, Icon, className, iconClassName, ...props }, ref) => {
+  (
+    {
+      name,
+      to,
+      isLoading,
+      isDisabled,
+      Icon,
+      className,
+      iconClassName,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <Button
         {...props}
-        disabled={isLoading}
+        disabled={isLoading || isDisabled}
         ref={ref}
         variant="plain"
         asChild

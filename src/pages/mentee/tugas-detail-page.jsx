@@ -25,7 +25,7 @@ export function AssignmentDetailStatus({ status }) {
       )
     case "PENDING":
       return (
-        <span className="text-yellow-500 text-txt18_20 font-medium group-hover:text-white">
+        <span className="text-yellow-600 text-txt18_20 font-medium group-hover:text-white">
           Sedang di review Mentor, mohon tunggu !
         </span>
       )
