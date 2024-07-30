@@ -1,9 +1,12 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientInput } from "@/components/common/gradient-input"
+import DetailMenteeDialog from "@/components/dialog/common/detail-mentee-dialog"
 import MentorListMenteeTable from "@/components/table/mentor/list-mentee"
+import useDialog from "@/hooks/useDialog"
 import useInput from "@/hooks/useInput"
 import { useFindAllMenteeByClassQuery } from "@/store/api/mentee.api"
 import { getUser } from "@/store/slices/user.slice"
+import { useState } from "react"
 import { useSelector } from "react-redux"
 
 const initialMenteeSearch = {
@@ -11,9 +14,15 @@ const initialMenteeSearch = {
 }
 
 export default function MentorListMenteePage() {
+  const [choosedMentee, setChoosedMentee] = useState(null)
   const user = useSelector(getUser)
   const { values: searchMenteeValue, onChange: onChangeSearchMentee } =
     useInput(initialMenteeSearch)
+
+  const {
+    isOpenDialog: isOpenDetailMenteeDialog,
+    onOpenDialog: onOpenDetailMenteeDialog,
+  } = useDialog()
 
   const {
     data: mentees,
@@ -23,6 +32,11 @@ export default function MentorListMenteePage() {
     classId: user?.class?.id,
     name: searchMenteeValue.name,
   })
+
+  function onDetailMentee(mentee) {
+    setChoosedMentee(mentee)
+    onOpenDetailMenteeDialog(true)
+  }
 
   return (
     <div className="flex flex-col">
@@ -39,13 +53,19 @@ export default function MentorListMenteePage() {
             />
           </div>
           <MentorListMenteeTable
-            onDetailMentee={() => {}}
+            onDetailMentee={onDetailMentee}
             isLoadingGetMentees={isLoadingGetMentees}
             isSuccessGetMentees={isSuccessGetMentees}
             mentees={mentees}
           />
         </div>
       </main>
+      <DetailMenteeDialog
+        onClose={() => setChoosedMentee(null)}
+        onOpenChange={onOpenDetailMenteeDialog}
+        open={isOpenDetailMenteeDialog}
+        mentee={choosedMentee}
+      />
     </div>
   )
 }

@@ -14,7 +14,7 @@ function MentorMenteeRows({
   mentees,
   isSuccessGetMentees,
   isLoadingGetMentees,
-  onDetailMentor,
+  onDetailMentee,
 }) {
   let tableContent
 
@@ -33,7 +33,7 @@ function MentorMenteeRows({
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                onDetailMentor(c)
+                onDetailMentee(c)
               }}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"

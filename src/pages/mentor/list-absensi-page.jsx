@@ -1,5 +1,7 @@
 import DashboardHeader from "@/components/common/dashboard-header"
+import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
+import { GradientLink } from "@/components/common/gradient-link"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +13,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
@@ -19,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
 import {
   Table,
   TableBody,
@@ -31,11 +33,13 @@ import { MONTH_WITH_ID } from "@/constants/date"
 import useInput from "@/hooks/useInput"
 import { cn } from "@/lib/class-merge"
 import { formattedDate, getAllWeeksInMonth, getWeekOfMonth } from "@/lib/date"
+import { handleStatusPresence } from "@/lib/handle-statur-presence"
 import { useFindWeeklyAttendanceQuery } from "@/store/api/attendance"
 import { getUser } from "@/store/slices/user.slice"
 import { useMemo, useState } from "react"
+import { FaExchangeAlt } from "react-icons/fa"
+import { IoMdAdd } from "react-icons/io"
 import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
 
 const initialMenteeSearch = {
   name: "",
@@ -85,28 +89,49 @@ export default function MentorListAbsensiPage() {
       week: choosedWeek,
     })
 
+  const filteredMentees = useMemo(() => {
+    if (isSuccessGetWeeklyAttendance && weeklyAttendance?.mentees?.length > 0) {
+      return weeklyAttendance?.mentees?.filter((mentee) =>
+        mentee?.name
+          .toLowerCase()
+          .includes(searchMenteeValue.name.toLowerCase()),
+      )
+    }
+    return []
+  }, [searchMenteeValue, weeklyAttendance, isSuccessGetWeeklyAttendance])
+
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Daftar Absensi" />
       <main className="flex flex-1 flex-col  gap-4  p-4 lg:gap-8 lg:p-6">
         <div className="flex flex-col items-end gap-y-8">
           <div className="flex items-center  justify-between w-full">
-            <div className="flex items-center gap-x-2 ">
-              <Button asChild>
-                <Link to={`/mentor/kelas/absensi/${user?.class?.id}/buat`}>
-                  Input Absensi
-                </Link>
-              </Button>
+            <div className="flex items-center gap-x-5 ">
+              <GradientLink
+                to={`/mentor/kelas/absensi/${user?.class?.id}/buat`}
+                className="w-[190px] rounded-lg text-[16px]  flex gap-x-2 h-[48px] p-0"
+                iconClassName="w-8 h-8"
+                name="Input Absensi"
+                Icon={IoMdAdd}
+              />
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button>Ubah Filter</Button>
+                  <GradientButton
+                    className="w-[180px] rounded-lg text-[16px]  flex gap-x-5 h-[48px] p-0"
+                    name="Ubah Filter"
+                    iconClassName="w-5 h-5"
+                    Icon={FaExchangeAlt}
+                  />
                 </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader className="space-y-5">
-                    <AlertDialogTitle>Ubah Filter</AlertDialogTitle>
-                    <div className="space-y-5">
+                <AlertDialogContent className="px-0 space-y-3">
+                  <AlertDialogHeader className="space-y-5 px-6">
+                    <AlertDialogTitle className="font-semibold  bg-gradient-to-r from-cyan-400  to-[#8A3DFF]  text-transparent bg-clip-text text-center text-[22px]">
+                      Ubah Filter
+                    </AlertDialogTitle>
+                    <Separator />
+                    <div className="space-y-8">
                       <div className="space-y-2">
-                        <h1>Pilih Bulan</h1>
+                        <h1 className="font-medium">Pilih Bulan</h1>
                         <Select
                           value={choosedMonth}
                           className="w-full"
@@ -139,7 +164,7 @@ export default function MentorListAbsensiPage() {
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <h1>Pilih Minggu</h1>
+                        <h1 className="font-medium">Pilih Minggu</h1>
                         <Select
                           className="w-full"
                           value={String(choosedRangeOfWeek)}
@@ -155,7 +180,6 @@ export default function MentorListAbsensiPage() {
                           </SelectTrigger>
                           <SelectContent className="max-h-[200px] ">
                             {allWeekOfTheMonth?.map((month, index) => {
-                              console.log("month", month)
                               return (
                                 <SelectItem
                                   className={cn(
@@ -181,13 +205,18 @@ export default function MentorListAbsensiPage() {
                         </Select>
                       </div>
                     </div>
-                    <AlertDialogDescription className=" sr-only">
-                      test
+                    <AlertDialogDescription className="sr-only">
+                      Change Date Filter
                     </AlertDialogDescription>
                   </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
+                  <Separator />
+                  <AlertDialogFooter className="px-6 gap-x-3">
+                    <AlertDialogCancel className="bg-color-1 text-white hover:text-white hover:bg-color-1/60">
+                      Tutup
+                    </AlertDialogCancel>
+                    <AlertDialogAction className="bg-green-500 hover:bg-green-600">
+                      Ubah
+                    </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -222,19 +251,36 @@ export default function MentorListAbsensiPage() {
             <TableBody className="[&_tr:last-child]:border text-txt12_20 ">
               {isSuccessGetWeeklyAttendance &&
                 weeklyAttendance?.mentees?.length > 0 &&
-                weeklyAttendance?.mentees?.map((mentee, index) => {
+                filteredMentees?.map((mentee, index) => {
                   return (
                     <TableRow key={index + 1} className="border">
-                      <TableCell className="font-medium">{index + 1}</TableCell>
-                      <TableCell className="font-medium">
+                      <TableCell className="font-semibold">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell className="font-semibold text-sm">
                         {mentee.name}
                       </TableCell>
                       {mentee?.attendance?.map((attd, index) => {
                         return (
-                          <TableCell key={index + 1}>{attd?.status}</TableCell>
+                          <TableCell
+                            key={index + 1}
+                            className={cn(
+                              "font-semibold text-sm",
+                              {
+                                "text-green-500 ": attd?.status === "PRESENT",
+                              },
+                              {
+                                "text-red-500 ": attd?.status === "ABSENT",
+                              },
+                              {
+                                "text-yellow-500 ": attd?.status === "HOLIDAY",
+                              },
+                            )}>
+                            {handleStatusPresence(attd?.status)}
+                          </TableCell>
                         )
                       })}
-                      <TableCell className="flex gap-x-2">
+                      <TableCell className="flex gap-x-2 font-semibold text-sm">
                         {`${mentee?.percentagePresent}%`}
                       </TableCell>
                     </TableRow>
