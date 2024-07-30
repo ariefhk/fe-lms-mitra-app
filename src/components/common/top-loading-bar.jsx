@@ -6,7 +6,7 @@ export default function TopLoadingBar() {
       <LoadingBar
         style={{
           backgroundColor: "transparent", // Set this to transparent to avoid conflicts
-          backgroundImage: "linear-gradient(to right, #32C7C4, #532599)", // Define your gradient here
+          backgroundImage: "linear-gradient(to right, #32C7C4, #8A3DFF)", // Define your gradient here
           height: "2px",
           width: "100%",
         }}

@@ -5,8 +5,8 @@ export default function DashboardProfile({
   imageUrl,
   name,
   email,
-  no_telp,
-  senior_mentor,
+  noTelp,
+  seniorMentor,
 }) {
   return (
     <div className="w-full rounded-[10px] shadow-2xl max-h-[400px] h-[400px] flex justify-center items-center">
@@ -19,9 +19,9 @@ export default function DashboardProfile({
         <div className="text-wrap space-y-5">
           <h1 className="text-txt30_40 text-color-4 font-medium">{name}</h1>
           <Separator />
-          {senior_mentor && (
+          {seniorMentor && (
             <h1 className="text-txt16_24 text-color-4 font-medium">
-              Senior Mentor: {senior_mentor}
+              Senior Mentor: {seniorMentor}
             </h1>
           )}
           <h1 className="text-txt16_24 text-color-4 font-medium">
@@ -29,7 +29,7 @@ export default function DashboardProfile({
             Email: {email}
           </h1>
           <h1 className="text-txt16_24 text-color-4 font-medium">
-            No Telp: {no_telp}
+            No Telp: {noTelp}
           </h1>
         </div>
       </div>
@@ -41,6 +41,6 @@ DashboardProfile.propTypes = {
   imageUrl: Proptypes.string,
   name: Proptypes.string,
   email: Proptypes.string,
-  no_telp: Proptypes.string,
-  senior_mentor: Proptypes.string,
+  noTelp: Proptypes.string,
+  seniorMentor: Proptypes.string,
 }

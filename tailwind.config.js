@@ -39,13 +39,13 @@ module.exports = {
         inter: ["Inter", "sans-serif"],
       },
       backgroundImage: {
-        "color-1": "linear-gradient(90deg, #32C7C4 0%, #532599 100%)",
+        "color-1": "linear-gradient(90deg, #32C7C4 0%, #8A3DFF 100%)",
       },
       colors: {
         "color-2": "#FBFBFB",
         "color-3": "#030303",
         "color-4": "#6D737A",
-        "color-5": "#532599",
+        "color-5": "#8A3DFF",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

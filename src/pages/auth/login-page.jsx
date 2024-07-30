@@ -19,7 +19,7 @@ export default function LoginPage() {
         </div>
       </div>
       <div className="flex items-center justify-center py-12  overflow-y-auto">
-        <div className="mx-auto grid font-poppins bg-color-2 w-[500px] h-[500px] gap-6 border rounded-[30px] px-[30px] py-3">
+        <div className="mx-auto grid font-poppins bg-color-2 w-[500px] h-[500px] gap-6 border rounded-[30px] px-[30px] py-8">
           <div className="grid gap-2 text-center">
             <h1 className="text-txt24_36 ">Masuk untuk Memulai Sesi Anda</h1>
           </div>
@@ -33,7 +33,7 @@ export default function LoginPage() {
             Kembali ke
             <Link
               to="/"
-              className="hover:underline hover:underline-offset-4 pl-2 font-normal">
+              className="hover:underline hover:font-semibold hover:underline-offset-4 pl-2 font-base">
               Beranda
             </Link>
           </div>

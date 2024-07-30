@@ -34,7 +34,7 @@ export default function DashboardNav({ dashLinks }) {
               alt=""
               className="w-[140px] h-[70px] flex-shrink-0"
             />
-            <span className="block  bg-gradient-to-r from-cyan-400  to-purple-900 text-transparent bg-clip-text">
+            <span className="block  bg-gradient-to-r from-cyan-400  to-[#8A3DFF] text-transparent bg-clip-text">
               Mobile Development
             </span>
           </Link>
@@ -74,13 +74,13 @@ export default function DashboardNav({ dashLinks }) {
                       />
                       <span
                         className={cn(
-                          "block text-txt16_24 group-hover/item:bg-gradient-to-r group-hover/item:from-cyan-400  group-hover/item:to-purple-900  group-hover/item:text-transparent group-hover/item:bg-clip-text",
+                          "block text-txt16_24 group-hover/item:bg-gradient-to-r group-hover/item:from-cyan-400  group-hover/item:to-[#8A3DFF]  group-hover/item:text-transparent group-hover/item:bg-clip-text",
                           {
-                            "bg-gradient-to-r from-cyan-400 text-[16px] leading-[24px] to-purple-900 text-transparent bg-clip-text":
+                            "bg-gradient-to-r from-cyan-400 text-[16px] leading-[24px] to-[#8A3DFF] text-transparent bg-clip-text":
                               checkIsLinkActive(dashLink.href),
                           },
                           {
-                            "bg-gradient-to-r from-cyan-400 text-[16px] leading-[24px] to-purple-900 text-transparent bg-clip-text":
+                            "bg-gradient-to-r from-cyan-400 text-[16px] leading-[24px] to-[#8A3DFF] text-transparent bg-clip-text":
                               dashLink.subLinks.length > 0 &&
                               dashLink.subLinks.find(
                                 (sub) => sub.href === pathname,
@@ -94,17 +94,17 @@ export default function DashboardNav({ dashLinks }) {
                     {dashLink.subLinks.length > 0 && (
                       <IoIosArrowDown
                         className={cn(
-                          "w-8 h-8 group-hover/item:fill-purple-900 transition duration-300",
+                          "w-8 h-8 group-hover/item:fill-[#8A3DFF] transition duration-300",
                           {
                             "transform rotate-180 ":
                               dashLink.id === expandedDashLink.id,
                           },
 
                           {
-                            "fill-purple-900": checkIsLinkActive(dashLink.href),
+                            "fill-[#8A3DFF]": checkIsLinkActive(dashLink.href),
                           },
                           {
-                            "fill-purple-900":
+                            "fill-[#8A3DFF]":
                               dashLink.subLinks.length > 0 &&
                               dashLink.subLinks.find(
                                 (sub) => sub.href === pathname,
@@ -128,18 +128,18 @@ export default function DashboardNav({ dashLinks }) {
                             <Separator
                               orientation="vertical"
                               className={cn(
-                                "h-[48px] w-[2px] bg-black group-hover/item:bg-gradient-to-r group-hover/item:from-cyan-400  group-hover/item:to-purple-900",
+                                "h-[48px] w-[2px] bg-black group-hover/item:bg-gradient-to-r group-hover/item:from-cyan-400  group-hover/item:to-[#8A3DFF]",
                                 {
-                                  "bg-gradient-to-r from-cyan-400  to-purple-900":
+                                  "bg-gradient-to-r from-cyan-400  to-[#8A3DFF]":
                                     checkIsLinkActive(dashSubLink.href),
                                 },
                               )}
                             />
                             <span
                               className={cn(
-                                "block text-txt16_24 group-hover/item:bg-gradient-to-r group-hover/item:from-cyan-400  group-hover/item:to-purple-900  group-hover/item:text-transparent group-hover/item:bg-clip-text",
+                                "block text-txt16_24 group-hover/item:bg-gradient-to-r group-hover/item:from-cyan-400  group-hover/item:to-[#8A3DFF]  group-hover/item:text-transparent group-hover/item:bg-clip-text",
                                 {
-                                  "bg-gradient-to-r from-cyan-400  text-[16px] leading-[24px] to-purple-900 text-transparent bg-clip-text":
+                                  "bg-gradient-to-r from-cyan-400  text-[16px] leading-[24px] to-[#8A3DFF] text-transparent bg-clip-text":
                                     checkIsLinkActive(dashSubLink.href),
                                 },
                               )}>

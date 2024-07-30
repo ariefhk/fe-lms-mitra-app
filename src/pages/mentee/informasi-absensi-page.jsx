@@ -62,8 +62,8 @@ export default function MenteeInformasiAbsensiPage() {
   // get the weekly attendance
   const { data: weeklyAttendance, isSuccess: isSuccessGetWeeklyAttendance } =
     useFindMenteeWeeklyAttendanceQuery({
-      menteeId: user?.id,
       classId: user?.class?.id,
+      menteeId: user?.id,
       year: new Date().getFullYear(),
       month: choosedMonth,
       week: choosedWeek,

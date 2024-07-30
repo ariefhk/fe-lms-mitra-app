@@ -33,10 +33,8 @@ export default function LoginForm() {
         username: values?.username,
         password: values?.password,
       }
-
-      console.log("LOGIN DATA: ", loginData)
-
-      const response = await login(values).unwrap()
+      // console.log("LOGIN DATA: ", loginData)
+      const response = await login(loginData).unwrap()
       // console.log("RESPONSE ON LOGIN SUBMIT: ", response)
       Swal.fire({
         icon: "success",
@@ -45,7 +43,7 @@ export default function LoginForm() {
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        // remake this part to switch case
+        // Navigate to the correct page based on the role
         switch (response.role) {
           case ROLES.ADMIN:
             return navigate("/admin", { replace: true })
@@ -64,7 +62,7 @@ export default function LoginForm() {
       Swal.fire({
         icon: "error",
         title: "Gagal Login!",
-        text: "Maaf, Anda gagal gagal Login!",
+        text: error?.data?.message ?? "Maaf, Anda gagal gagal Login!",
         showConfirmButton: false,
         timer: 1500,
       })
@@ -121,7 +119,7 @@ export default function LoginForm() {
           <GradientButton
             type="submit"
             isLoading={isLoading}
-            className="rounded-[4px] w-full flex gap-x-2 text-[16px]  h-[50px] px-5"
+            className="rounded-lg w-full flex gap-x-2 text-[16px]  h-[50px] px-5"
             name="Masuk"
           />
         </div>

@@ -15,7 +15,7 @@ export default function AdminProfilePage() {
           <DashboardProfile
             name={user?.name}
             email={user?.email}
-            no_telp={user?.no_telp}
+            noTelp={user?.no_telp}
             imageUrl={getImageURL(user?.profilePicture)}
           />
         </div>

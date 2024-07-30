@@ -10,6 +10,7 @@ import { useSelector } from "react-redux"
 
 export default function MenteeProfilePage() {
   const user = useSelector(getUser)
+
   const {
     isOpenDialog: isOpenUpdateProfileDialog,
     onOpenDialog: onOpenUpdateProfileDialog,

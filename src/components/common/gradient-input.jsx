@@ -19,7 +19,7 @@ const GradientInput = React.forwardRef(
     return (
       <div
         className={cn(
-          "m-4 p-[2px] rounded-full max-w-sm bg-gradient-to-r from-cyan-400  to-purple-700",
+          "m-4 p-[2px] rounded-full max-w-sm bg-gradient-to-r from-cyan-400  to-[#8A3DFF]",
           className,
         )}>
         <label htmlFor={htmlFor} className="sr-only">
