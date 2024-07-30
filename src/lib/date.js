@@ -11,8 +11,8 @@ export const formattedDate = (dates, isNeedYear = false) => {
 
   // Return the formatted date string
   return isNeedYear
-    ? `${day}, ${date.getDate()} ${month} ${date.getFullYear()}`
-    : `${day}, ${date.getDate()} ${month}`
+    ? `${date.getDate()} ${month} ${date.getFullYear()}, ${day}`
+    : `${date.getDate()} ${month}, ${day}`
 }
 
 export const formattedDateStr = (dateStr) => {

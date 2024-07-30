@@ -38,18 +38,6 @@ export default function MentorListMenteeNilaiDetailPage() {
     )
 
   const {
-    data: calculatedMenteeAssignments,
-    isSuccess: isSuccessGetCalculatedMenteeAsignments,
-  } = useFindCalculateMenteeAssignmentGradeQuery(
-    {
-      menteeId: menteeId,
-    },
-    {
-      skip: !menteeId,
-    },
-  )
-
-  const {
     data: menteeAssignments,
     isLoading: isLoadingGetMenteeAssignments,
     isSuccess: isSuccessGetMenteeAssignments,
@@ -63,12 +51,29 @@ export default function MentorListMenteeNilaiDetailPage() {
   )
 
   const {
+    data: calculatedMenteeAssignments,
+    isSuccess: isSuccessGetCalculatedMenteeAsignments,
+  } = useFindCalculateMenteeAssignmentGradeQuery(
+    {
+      menteeId: menteeId,
+    },
+    {
+      skip: !menteeId,
+    },
+  )
+
+  const {
     data: menteeFinalReportAssignments,
     isLoading: isLoadingGetMenteeFinalReportAssignments,
     isSuccess: isSuccessGetMenteeFinalReportAssignments,
-  } = useFindAllFinalReportMenteeAssignmentQuery({
-    menteeId: menteeId,
-  })
+  } = useFindAllFinalReportMenteeAssignmentQuery(
+    {
+      menteeId: menteeId,
+    },
+    {
+      skip: !menteeId,
+    },
+  )
 
   function onEditMenteeAssignment(assignment) {
     setChoosedAssignment(assignment)

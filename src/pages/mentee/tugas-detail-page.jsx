@@ -130,7 +130,10 @@ export default function MenteeTugasDetailPage() {
                 }
               </h1>
               <h1>
-                Nilai : <span className="text-txt18_20 font-semibold">{0}</span>
+                Nilai :{" "}
+                <span className="text-txt18_20 font-semibold">
+                  {menteeAssignmentDetail?.grade}
+                </span>
               </h1>
             </div>
           )}

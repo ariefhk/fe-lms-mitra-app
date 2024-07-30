@@ -1,27 +1,53 @@
 import DashboardHeader from "@/components/common/dashboard-header"
-import { GradientInput } from "@/components/common/gradient-input"
-import MentorListMenteeTable from "@/components/table/mentor/list-mentee"
-import { menteeList } from "@/constants/dummy"
+import MenteeListNilaiMenteeTable from "@/components/table/mentee/list-nilai"
+import {
+  useFindAllMenteeAssignmentQuery,
+  useFindCalculateMenteeAssignmentGradeQuery,
+} from "@/store/api/assignment.api"
+import { getUser } from "@/store/slices/user.slice"
+import { useSelector } from "react-redux"
 
 export default function MenteeInformasiNilaiPage() {
+  const user = useSelector(getUser)
+
+  const {
+    data: menteeAssignments,
+    isLoading: isLoadingGetMenteeAssignments,
+    isSuccess: isSuccessGetMenteeAssignments,
+  } = useFindAllMenteeAssignmentQuery(
+    {
+      menteeId: user?.id,
+    },
+    {
+      skip: !user?.id,
+    },
+  )
+
+  const {
+    data: calculatedMenteeAssignments,
+    isSuccess: isSuccessGetCalculatedMenteeAsignments,
+  } = useFindCalculateMenteeAssignmentGradeQuery(
+    {
+      menteeId: user?.id,
+    },
+    {
+      skip: !user?.id,
+    },
+  )
+
   return (
     <div className="flex flex-col">
-      <DashboardHeader title="Daftar Mentee" />
-      <main className="flex flex-1 flex-col  gap-4  p-4 lg:gap-8 lg:p-6">
-        <div className="flex flex-col items-end gap-y-8">
-          <div className="flex items-center ">
-            <GradientInput
-              placeholder="Cari Mentee..."
-              inputClassName="text-[15px]"
-            />
-          </div>
-          <MentorListMenteeTable
-            onDetailMentee={() => {}}
-            isLoadingGetMentees={false}
-            isSuccessGetMentees={true}
-            mentees={menteeList}
-          />
-        </div>
+      <DashboardHeader title="Daftar Nilai Mentee" />
+      <main className="flex flex-1 flex-col  gap-4  p-4 lg:gap-8 lg:px-6 lg:pb-6 lg:pt-16">
+        <MenteeListNilaiMenteeTable
+          isLoadingGetMenteeAssignments={isLoadingGetMenteeAssignments}
+          isSuccessGetMenteeAssignments={isSuccessGetMenteeAssignments}
+          isSuccessGetCalculatedMenteeAsignments={
+            isSuccessGetCalculatedMenteeAsignments
+          }
+          totalGrade={calculatedMenteeAssignments?.totalGrade}
+          menteeAssignments={menteeAssignments}
+        />
       </main>
     </div>
   )

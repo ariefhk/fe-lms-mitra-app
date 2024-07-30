@@ -12,13 +12,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { FormControl } from "@/components/ui/form"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import {
   Select,
   SelectContent,
@@ -40,8 +33,6 @@ import { cn } from "@/lib/class-merge"
 import { formattedDate, getAllWeeksInMonth, getWeekOfMonth } from "@/lib/date"
 import { useFindWeeklyAttendanceQuery } from "@/store/api/attendance"
 import { getUser } from "@/store/slices/user.slice"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
 import { useMemo, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
@@ -93,8 +84,6 @@ export default function MentorListAbsensiPage() {
       month: choosedMonth,
       week: choosedWeek,
     })
-
-  const [date, setDate] = useState()
 
   return (
     <div className="flex flex-col">
