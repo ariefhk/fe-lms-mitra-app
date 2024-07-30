@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { formattedDate } from "@/lib/date"
 import { getFile } from "@/lib/getFile"
 import PropTypes from "prop-types"
 import { MdOutlineVisibility } from "react-icons/md"
@@ -39,7 +40,7 @@ function MentorMenteeRows({
               Icon={MdOutlineVisibility}
             />
           </TableCell>
-          <TableCell>{c?.dueDate || "-"}</TableCell>
+          <TableCell>{formattedDate(c?.dueDate, true) || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
             <Button
               className="bg-green-500 hover:bg-green-600"
@@ -83,7 +84,7 @@ function MentorMenteeRows({
     tableContent = (
       <TableRow className="border ">
         <TableCell colSpan={7} className="text-center">
-          Tugas Mentee tidak ditemukan!
+          Tugas tidak ditemukan!
         </TableCell>
       </TableRow>
     )

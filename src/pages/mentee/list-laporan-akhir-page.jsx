@@ -1,8 +1,4 @@
 import DashboardHeader from "@/components/common/dashboard-header"
-import { GradientButton } from "@/components/common/gradient-button"
-import { GradientInput } from "@/components/common/gradient-input"
-import MentorListAssignmentMenteeTable from "@/components/table/mentor/list-mentee-assignment"
-import { assignmenList } from "@/constants/dummy/mentor-page.dummy"
 import { useFindAllFinalReportMenteeAssignmentQuery } from "@/store/api/assignment.api"
 import { getUser } from "@/store/slices/user.slice"
 import { useSelector } from "react-redux"
@@ -23,8 +19,6 @@ export default function MenteeListLaporanAkhirPage() {
       skip: !user.id,
     },
   )
-
-  console.log(finalReportMenteeAssignments)
 
   return (
     <div className="flex flex-col">

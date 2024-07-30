@@ -8,6 +8,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
 import {
   Table,
   TableBody,
@@ -16,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { formattedDate } from "@/lib/date"
 import { useDeleteAssignmentMutation } from "@/store/api/assignment.api"
 import PropTypes from "prop-types"
 import { BsArrowRepeat } from "react-icons/bs"
@@ -58,42 +60,36 @@ export default function MentorDeleteAssignmentDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
+      <AlertDialogContent className="px-0 font-poppins max-w-[400px]">
         <AlertDialogDescription className="sr-only">
           This action cannot be undone. This will permanently delete your
           account and remove your data from our servers.
         </AlertDialogDescription>
-        <AlertDialogHeader className="space-y-5">
-          <AlertDialogTitle className="text-txt20_30 text-wrap">
-            Apakah Anda yakin hapus Tugas{" "}
-            <span className="underline underline-offset-4">
-              {assignment?.name} ?
-            </span>
+        <AlertDialogHeader className="px-6">
+          <AlertDialogTitle className="text-center bg-gradient-to-r from-cyan-400  to-[#8A3DFF]  text-transparent bg-clip-text">
+            Hapus Tugas
           </AlertDialogTitle>
-          <div className="w-full   max-h-[400px] overflow-y-auto">
-            <Table className="">
-              <TableHeader>
-                <TableRow className="bg-color-1   hover:bg-color-1/80">
-                  <TableHead className="w-[120px] text-white"></TableHead>
-                  <TableHead className=" text-white text-[16px] leading-[24px]">
-                    Keterangan
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="[&_tr:last-child]:border ">
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Nama Tugas
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {assignment?.name || "-"}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
+          <Separator />
+          <AlertDialogDescription className="text-black">
+            Apakah Anda yakin ingin menghapus Tugas ?
+            <div className="mt-4 grid gap-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Nama Tugas:</span>
+                <span>{assignment?.title || "_"}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Tenggat Waktu:</span>
+                <span>
+                  {assignment?.dueDate
+                    ? formattedDate(assignment?.dueDate)
+                    : "_"}
+                </span>
+              </div>
+            </div>
+          </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <Separator />
+        <AlertDialogFooter className="px-6">
           <AlertDialogCancel asChild>
             <Button
               type="button"
@@ -105,11 +101,11 @@ export default function MentorDeleteAssignmentDialog({
             </Button>
           </AlertDialogCancel>
           <Button
+            variant="destructive"
             disabled={isLoadingDeleteAssignment}
             onClick={async () => {
               await onDeleteAssignment()
-            }}
-            className="bg-color-4 text-white hover:text-white hover:bg-color-4/60 gap-x-2 flex items-center">
+            }}>
             {isLoadingDeleteAssignment && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}{" "}

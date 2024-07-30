@@ -45,6 +45,11 @@ export default function MentorListAssignment() {
     title: searchAssignmentValue?.title,
   })
 
+  console.log({
+    assignment: assignments,
+    choosed: choosedAssignment,
+  })
+
   function onDeleteAssigment(assignment) {
     setChoosedAssignment(assignment)
     onOpenDeleteAssignmentDialog(true)

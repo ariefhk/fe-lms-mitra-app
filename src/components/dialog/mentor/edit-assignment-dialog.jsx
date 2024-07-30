@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { useUpdateAssignmentMutation } from "@/store/api/assignment.api"
+import { format } from "date-fns"
 import PropTypes from "prop-types"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
@@ -51,7 +52,9 @@ export default function MentorEditAssignmentDialog({
       classId: classId,
       title: assignment?.title,
       description: assignment?.description,
-      dueDate: assignment?.dueDate,
+      dueDate:
+        assignment?.dueDate &&
+        new Date(assignment?.dueDate).toISOString().split("T")[0],
     })
   }, [form, assignment, classId])
 
@@ -63,12 +66,13 @@ export default function MentorEditAssignmentDialog({
       assignmentId: assignment?.id,
       title: values.title,
       description: values.description,
-      dueDate: values.dueDate,
+      dueDate: format(new Date(values.dueDate), "yyyy-MM-dd"),
       assignmentFile: values.assignmentFile,
     }
-    // console.log("CREATE TUGAS DATA: ", updateAssignmentData)
+    console.log("UPDATE TUGAS DATA: ", updateAssignmentData)
     try {
-      await updateAssignment(updateAssignmentData).unwrap()
+      const res = await updateAssignment(updateAssignmentData).unwrap()
+      console.log("UPDATE TUGAS RESPONSE: ", res)
       form.reset()
       onOpenChange(false)
       Swal.fire({
@@ -97,8 +101,8 @@ export default function MentorEditAssignmentDialog({
         </AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
-              Edit Data Tugas
+            <span className="text-txt24_36 font-semibold  bg-gradient-to-r from-cyan-400  to-[#8A3DFF]  text-transparent bg-clip-text">
+              Ubah Tugas
             </span>
             <Separator />
           </AlertDialogTitle>
@@ -188,7 +192,7 @@ export default function MentorEditAssignmentDialog({
                 form.reset()
                 typeof onClose === "function" && onClose()
               }}
-              className="bg-color-4 text-white hover:text-white hover:bg-color-4/60">
+              className="bg-color-1 text-white hover:text-white hover:bg-color-1/60">
               Tutup
             </Button>
           </AlertDialogCancel>
@@ -196,7 +200,7 @@ export default function MentorEditAssignmentDialog({
             disabled={isLoadingUpdateAssignment || !isFormValueChanged}
             form="edit-assignment-form"
             type="submit"
-            className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
+            className="bg-green-500 hover:bg-green-600 text-white gap-x-2 flex items-center">
             {isLoadingUpdateAssignment && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}

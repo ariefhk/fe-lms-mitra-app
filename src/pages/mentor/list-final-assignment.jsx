@@ -55,7 +55,7 @@ export default function MentorListFinalAsignment() {
   }
   return (
     <div className="flex flex-col">
-      <DashboardHeader title="Daftar Laporan Akhir" />
+      <DashboardHeader title="Daftar Tugas Laporan Akhir" />
       <main className="flex flex-1 flex-col  gap-4  p-4 lg:gap-8 lg:p-6">
         <div className="flex flex-col items-end gap-y-8">
           <div className="flex items-center ">
