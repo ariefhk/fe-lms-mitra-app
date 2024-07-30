@@ -10,10 +10,8 @@ import {
 } from "@/components/ui/table"
 import { cn } from "@/lib/class-merge"
 import { formattedDate } from "@/lib/date"
-import {
-  translateAssignmentStatus,
-  translateFinalReportAssignmentStatus,
-} from "@/lib/translate-assignment-status"
+import { getFile } from "@/lib/getFile"
+import { translateFinalReportAssignmentStatus } from "@/lib/translate-assignment-status"
 import PropTypes from "prop-types"
 import { MdOutlineVisibility } from "react-icons/md"
 import { translateAssignmentStatusStyle } from "./list-mentee-nilai-detail"
@@ -32,13 +30,14 @@ function MentorMenteeRows({
     menteeAssignments.length > 0
   ) {
     tableContent = menteeAssignments.map((c, index) => {
+      console.log(c)
       return (
         <TableRow className="border" key={index + 1}>
           <TableCell className="font-medium">{index + 1}</TableCell>
           <TableCell>{c?.assignment?.title || "-"}</TableCell>
           <TableCell>
             <GradientLink
-              to={c?.assignment?.fileUrl || "#"}
+              to={getFile(c?.assignment?.file) || "#"}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"
               Icon={MdOutlineVisibility}
@@ -56,7 +55,7 @@ function MentorMenteeRows({
           </TableCell>
           <TableCell>
             <GradientLink
-              to={c?.assignment?.fileUrl || "#"}
+              to={c?.status === "UNCOMPLETED" ? "#" : getFile(c?.file)}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"
               Icon={MdOutlineVisibility}
@@ -86,7 +85,6 @@ function MentorMenteeRows({
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="font-medium">-</TableCell>
-
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="flex gap-x-2">
             <div className="w-max flex gap-x-2 h-[40px] px-5 bg-gray-300 animate-pulse" />

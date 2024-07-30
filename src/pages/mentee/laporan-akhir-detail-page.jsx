@@ -1,7 +1,9 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
+import { GradientLink } from "@/components/common/gradient-link"
 import { cn } from "@/lib/class-merge"
 import { formattedDate } from "@/lib/date"
+import { getFile } from "@/lib/getFile"
 import {
   useCreateMenteeSubmitAssignmentMutation,
   useFindMenteeAssignmentDetailQuery,
@@ -134,7 +136,8 @@ export default function MenteeFinalReportDetailPage() {
             </div>
           )}
           <div className="flex items-center gap-x-5">
-            <GradientButton
+            <GradientLink
+              to={getFile(menteeAssignmentDetail?.assignment?.file)}
               className="w-[360px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
               name="Download Ketentuan Laporan Akhir"
               iconClassName="w-6 h-6"

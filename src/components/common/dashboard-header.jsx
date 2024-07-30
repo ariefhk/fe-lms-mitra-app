@@ -1,3 +1,4 @@
+import Proptypes from "prop-types"
 import LogoutButton from "./logout-button"
 
 export default function DashboardHeader({ title = "Dashboard" }) {
@@ -9,4 +10,8 @@ export default function DashboardHeader({ title = "Dashboard" }) {
       <LogoutButton />
     </header>
   )
+}
+
+DashboardHeader.propTypes = {
+  title: Proptypes.string,
 }

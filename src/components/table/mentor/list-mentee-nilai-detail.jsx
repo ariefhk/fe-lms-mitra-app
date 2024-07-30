@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table"
 import { cn } from "@/lib/class-merge"
 import { formattedDate } from "@/lib/date"
+import { getFile } from "@/lib/getFile"
 import { translateAssignmentStatus } from "@/lib/translate-assignment-status"
 import PropTypes from "prop-types"
 import { MdOutlineVisibility } from "react-icons/md"
@@ -47,7 +48,7 @@ function MentorMenteeRows({
           <TableCell>{c?.assignment?.title || "-"}</TableCell>
           <TableCell>
             <GradientLink
-              to={c?.assignment?.fileUrl || "#"}
+              to={getFile(c?.assignment?.file)}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"
               Icon={MdOutlineVisibility}
@@ -66,7 +67,7 @@ function MentorMenteeRows({
           <TableCell>{c?.grade || "-"}</TableCell>
           <TableCell>
             <GradientLink
-              to={c?.status === "UNCOMPLETED" ? "#" : c?.fileAnswerUrl}
+              to={c?.status === "UNCOMPLETED" ? "#" : getFile(c?.file)}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"
               Icon={MdOutlineVisibility}
@@ -81,7 +82,7 @@ function MentorMenteeRows({
                 e.stopPropagation()
                 onEditMenteeAssigment(c)
               }}>
-              Nilai Tugas
+              Periksa Tugas
             </Button>
           </TableCell>
         </TableRow>

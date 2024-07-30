@@ -36,6 +36,7 @@ export const protectedApiEndpoint = createApi({
       "CLASS",
       "ATTENDANCE",
       "ASSIGNMENT",
+      "FILE",
     ],
   }),
   endpoints: () => ({}),

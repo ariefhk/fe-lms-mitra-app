@@ -1,4 +1,5 @@
 import { cn } from "@/lib/class-merge"
+import PropTypes from "prop-types"
 import * as React from "react"
 import { Input } from "../ui/input"
 
@@ -45,3 +46,13 @@ const GradientInput = React.forwardRef(
 GradientInput.displayName = "GradientInput"
 
 export { GradientInput }
+
+GradientInput.propTypes = {
+  className: PropTypes.string,
+  inputClassName: PropTypes.string,
+  placeholder: PropTypes.string,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  htmlFor: PropTypes.string,
+}

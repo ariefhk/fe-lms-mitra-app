@@ -151,6 +151,7 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [
         { type: "ASSIGNMENT", id: "LIST_OF_MENTEE_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "MENTEE_ASSIGNMENT_DETAIL" },
         { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_MENTEE_ASSIGNMENT" },
         { type: "ASSIGNMENT", id: "CALCULATED_MENTEE_ASSIGNMENT_GRADE" },
       ],
@@ -173,6 +174,7 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [
         { type: "ASSIGNMENT", id: "LIST_OF_MENTEE_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "MENTEE_ASSIGNMENT_DETAIL" },
         { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_MENTEE_ASSIGNMENT" },
         { type: "ASSIGNMENT", id: "CALCULATED_MENTEE_ASSIGNMENT_GRADE" },
       ],
@@ -195,6 +197,7 @@ export const assignmentApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [
         { type: "ASSIGNMENT", id: "LIST_OF_MENTEE_ASSIGNMENT" },
+        { type: "ASSIGNMENT", id: "MENTEE_ASSIGNMENT_DETAIL" },
         { type: "ASSIGNMENT", id: "LIST_OF_FINAL_REPORT_MENTEE_ASSIGNMENT" },
         { type: "ASSIGNMENT", id: "CALCULATED_MENTEE_ASSIGNMENT_GRADE" },
       ],
