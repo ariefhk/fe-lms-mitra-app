@@ -90,11 +90,24 @@ export default function MentorListMenteeNilaiDetailPage() {
       <main className="flex flex-1 flex-col  gap-4  p-4 lg:gap-8 lg:p-6">
         <div className="flex flex-col items-start gap-y-8">
           <div className="flex items-center justify-between w-full">
-            <div className="flex flex-col  text-txt18_20 gap-y-5">
-              <h1>Nama : {isSuccessGetMentee ? mentee?.name : "_"}</h1>
-              <p>Email: {isSuccessGetMentee ? mentee?.email : "_"}</p>
-              <p>No. Telp: {isSuccessGetMentee ? mentee?.no_telp : "_"}</p>
-              <p>Batch: {isSuccessGetMentee ? mentee?.batch : "_"}</p>
+            <div className="flex flex-col  text-txt16_20  gap-y-5">
+              <h1>
+                <span className="font-medium pr-2">Nama:</span>{" "}
+                {isSuccessGetMentee ? mentee?.name : "_"}
+              </h1>
+              <p>
+                <span className="font-medium pr-2">Email:</span>{" "}
+                {isSuccessGetMentee ? mentee?.email : "_"}
+              </p>
+              <p>
+                <span className="font-medium pr-2">No. Telp:</span>{" "}
+                {isSuccessGetMentee ? mentee?.no_telp : "_"}
+              </p>
+              <p>
+                {" "}
+                <span className="font-medium pr-2">Batch:</span>{" "}
+                {isSuccessGetMentee ? mentee?.batch : "_"}
+              </p>
             </div>
           </div>
           <div>

@@ -96,7 +96,7 @@ export default function MentorEditMenteeFinalReportAssignmentDialog({
         </AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
+            <span className="text-txt24_36 font-semibold  bg-gradient-to-r from-cyan-400  to-[#8A3DFF]  text-transparent bg-clip-text">
               Memeriksa Laporan Akhir Mentee
             </span>
             <Separator />
@@ -170,7 +170,7 @@ export default function MentorEditMenteeFinalReportAssignmentDialog({
                 form.reset()
                 typeof onClose === "function" && onClose()
               }}
-              className="bg-color-4 text-white hover:text-white hover:bg-color-4/60">
+              className="bg-color-1 text-white hover:text-white hover:bg-color-1/60">
               Tutup
             </Button>
           </AlertDialogCancel>
@@ -181,7 +181,7 @@ export default function MentorEditMenteeFinalReportAssignmentDialog({
             }
             form="review-final-report-assignment-form"
             type="submit"
-            className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
+            className="bg-green-500 hover:bg-green-600 text-white gap-x-2 flex items-center">
             {isLoadingMentorReviewFinalReportMenteeAssignment && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}

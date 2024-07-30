@@ -120,7 +120,6 @@ export default function MentorListNilaiDetailLaporanMenteeTable({
           <TableHead className="w-[200px] text-white">File Tugas</TableHead>
           <TableHead className="w-[200px] text-white">Tenggat</TableHead>
           <TableHead className="w-[200px] text-white">Status</TableHead>
-
           <TableHead className="w-[200px] text-white">File Jawaban</TableHead>
           <TableHead className="w-[200px] text-white">Aksi</TableHead>
         </TableRow>

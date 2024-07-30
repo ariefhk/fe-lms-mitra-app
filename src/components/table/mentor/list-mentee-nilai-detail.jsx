@@ -133,7 +133,7 @@ export default function MentorListNilaiDetailMenteeTable({
           <TableHead className="w-[140px] text-white">File Tugas</TableHead>
           <TableHead className="w-[300px] text-white">Tenggat</TableHead>
           <TableHead className="w-[200px] text-white">Status</TableHead>
-          <TableHead className="w-[200px] text-white">Score</TableHead>
+          <TableHead className="w-[200px] text-white">Nilai</TableHead>
           <TableHead className="w-[180px] text-white">File Jawaban</TableHead>
           <TableHead className="w-[200px] text-white">Aksi</TableHead>
         </TableRow>
