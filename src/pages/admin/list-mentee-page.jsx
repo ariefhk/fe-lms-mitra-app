@@ -3,6 +3,7 @@ import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
 import AdminCreateMenteeDialog from "@/components/dialog/admin/add-mentee-dialog"
 import AdminDeleteMenteeDialog from "@/components/dialog/admin/delete-mentee-dialog"
+import AdminDetailMenteeDialog from "@/components/dialog/admin/detail-mentee-dialog"
 import AdminEditMenteeDialog from "@/components/dialog/admin/edit-mentee-dialog"
 import AdminListMenteeTable from "@/components/table/admin/list-mentee"
 import useDialog from "@/hooks/useDialog"
@@ -84,6 +85,7 @@ export default function AdminListMenteePage() {
           <AdminListMenteeTable
             onDeleteMentee={onDeleteMentee}
             onEditMentee={onEditMentee}
+            onDetailMentee={onDetailMentee}
             isLoadingGetMentees={isLoadingGetMentees}
             isSuccessGetMentees={isSuccessGetMentees}
             mentees={mentees}
@@ -105,6 +107,12 @@ export default function AdminListMenteePage() {
         onClose={() => setChoosedMentee(null)}
         onOpenChange={onOpenEditMenteeDialog}
         open={isOpenEditMenteeDialog}
+        mentee={choosedMentee}
+      />
+      <AdminDetailMenteeDialog
+        onClose={() => setChoosedMentee(null)}
+        onOpenChange={onOpenDetailMenteeDialog}
+        open={isOpenDetailMenteeDialog}
         mentee={choosedMentee}
       />
     </div>

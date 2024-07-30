@@ -52,7 +52,7 @@ function AdminSeniorMentorRows({
                 e.stopPropagation()
                 onEditSeniorMentor(c)
               }}>
-              Edit
+              Ubah
             </Button>
             <Button
               onClick={(e) => {

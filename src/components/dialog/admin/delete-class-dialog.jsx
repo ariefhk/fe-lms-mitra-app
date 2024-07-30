@@ -57,7 +57,7 @@ export default function AdminDeleteClassDialog({
           account and remove your data from our servers.
         </AlertDialogDescription>
         <AlertDialogHeader className="px-6">
-          <AlertDialogTitle className="text-center">
+          <AlertDialogTitle className="text-center bg-gradient-to-r from-cyan-400  to-[#8A3DFF]  text-transparent bg-clip-text">
             Hapus Kelas
           </AlertDialogTitle>
           <Separator />

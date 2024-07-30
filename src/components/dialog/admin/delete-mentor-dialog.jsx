@@ -8,14 +8,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Separator } from "@/components/ui/separator"
 import { useDeleteMentorMutation } from "@/store/api/mentor.api"
 import PropTypes from "prop-types"
 import { BsArrowRepeat } from "react-icons/bs"
@@ -58,58 +51,48 @@ export default function AdminDeleteMentorDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
+      <AlertDialogContent className="px-0 font-poppins">
         <AlertDialogDescription className="sr-only">
           This action cannot be undone. This will permanently delete your
           account and remove your data from our servers.
         </AlertDialogDescription>
-        <AlertDialogHeader className="space-y-5">
-          <AlertDialogTitle className="text-txt20_30 text-wrap">
-            Apakah Anda yakin hapus Mentor{" "}
-            <span className="underline underline-offset-4">
-              {mentor?.name} ?
-            </span>
+        <AlertDialogHeader className="px-6">
+          <AlertDialogTitle className="text-center bg-gradient-to-r from-cyan-400  to-[#8A3DFF]  text-transparent bg-clip-text">
+            Hapus Mentor
           </AlertDialogTitle>
-          <div className="w-full   max-h-[400px] overflow-y-auto">
-            <Table className="">
-              <TableHeader>
-                <TableRow className="bg-color-1   hover:bg-color-1/80">
-                  <TableHead className="w-[120px] text-white"></TableHead>
-                  <TableHead className=" text-white text-[16px] leading-[24px]">
-                    Keterangan
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="[&_tr:last-child]:border ">
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Nama Mentor
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {mentor?.name || "-"}
-                  </TableCell>
-                </TableRow>
-                {/* <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Guru
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {mentor?.teacher?.name || "-"}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Jumlah Murid
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {mentor?.studentCount || "-"}
-                  </TableCell>
-                </TableRow> */}
-              </TableBody>
-            </Table>
-          </div>
+          <Separator />
+          <AlertDialogDescription className="text-black">
+            Apakah Anda yakin ingin menghapus Mentor ?
+            <div className="mt-4 grid gap-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Username:</span>
+                <span> {mentor?.username}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Nama:</span>
+                <span>{mentor?.name}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Email:</span>
+                <span>{mentor?.email}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">No Telp:</span>
+                <span>{mentor?.no_telp}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Kelas:</span>
+                <span>{mentor?.class?.name}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Senior Mentor:</span>
+                <span>{mentor?.seniorMentor?.name}</span>
+              </div>
+            </div>
+          </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <Separator />
+        <AlertDialogFooter className="px-6">
           <AlertDialogCancel asChild>
             <Button
               type="button"
@@ -121,11 +104,11 @@ export default function AdminDeleteMentorDialog({
             </Button>
           </AlertDialogCancel>
           <Button
+            variant="destructive"
             disabled={isLoadingDeleteMentor}
             onClick={async () => {
               await onDeleteMentor()
-            }}
-            className="bg-color-4 text-white hover:text-white hover:bg-color-4/60 gap-x-2 flex items-center">
+            }}>
             {isLoadingDeleteMentor && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}{" "}

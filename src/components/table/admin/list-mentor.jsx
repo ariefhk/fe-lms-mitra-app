@@ -1,4 +1,4 @@
-import { GradientLink } from "@/components/common/gradient-link"
+import { GradientButton } from "@/components/common/gradient-button"
 import { Button } from "@/components/ui/button"
 import {
   Table,
@@ -17,6 +17,7 @@ function AdminMentorRows({
   isLoadingGetMentors,
   onEditMentor,
   onDeleteMentor,
+  onDetailMentor,
 }) {
   let tableContent
 
@@ -30,8 +31,12 @@ function AdminMentorRows({
           <TableCell>{c?.no_telp || "-"}</TableCell>
           <TableCell>{c?.class?.name || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
-            <GradientLink
-              to={"/admin/user/mentor/" + c.id}
+            <GradientButton
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onDetailMentor(c)
+              }}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"
               Icon={MdOutlineVisibility}
@@ -43,7 +48,7 @@ function AdminMentorRows({
                 e.stopPropagation()
                 onEditMentor(c)
               }}>
-              Edit
+              Ubah
             </Button>
             <Button
               onClick={(e) => {
@@ -94,6 +99,7 @@ export default function AdminListMentorTable({
   isLoadingGetMentors,
   onEditMentor,
   onDeleteMentor,
+  onDetailMentor,
 }) {
   return (
     <Table>
@@ -114,6 +120,7 @@ export default function AdminListMentorTable({
           isSuccessGetMentors={isSuccessGetMentors}
           onDeleteMentor={onDeleteMentor}
           onEditMentor={onEditMentor}
+          onDetailMentor={onDetailMentor}
         />
       </TableBody>
     </Table>
@@ -126,4 +133,5 @@ AdminListMentorTable.propTypes = {
   isLoadingGetMentors: PropTypes.bool,
   onEditMentor: PropTypes.func,
   onDeleteMentor: PropTypes.func,
+  onDetailMentor: PropTypes.func,
 }

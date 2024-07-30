@@ -1,4 +1,4 @@
-import { GradientLink } from "@/components/common/gradient-link"
+import { GradientButton } from "@/components/common/gradient-button"
 import { Button } from "@/components/ui/button"
 import {
   Table,
@@ -17,6 +17,7 @@ function AdminMenteeRows({
   isLoadingGetMentees,
   onEditMentee,
   onDeleteMentee,
+  onDetailMentee,
 }) {
   let tableContent
 
@@ -31,8 +32,12 @@ function AdminMenteeRows({
           <TableCell>{c?.class?.name || "-"}</TableCell>
           <TableCell>{c?.batch || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
-            <GradientLink
-              to={"/admin/user/mentee/" + c.id}
+            <GradientButton
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onDetailMentee(c)
+              }}
               className="w-12 rounded-lg text-[18px] flex gap-x-5 h-[42px] p-0"
               iconClassName="w-6 h-6"
               Icon={MdOutlineVisibility}
@@ -44,7 +49,7 @@ function AdminMenteeRows({
                 e.stopPropagation()
                 onEditMentee(c)
               }}>
-              Edit
+              Ubah
             </Button>
             <Button
               onClick={(e) => {
@@ -96,6 +101,7 @@ export default function AdminListMenteeTable({
   isLoadingGetMentees,
   onEditMentee,
   onDeleteMentee,
+  onDetailMentee,
 }) {
   return (
     <Table>
@@ -117,6 +123,7 @@ export default function AdminListMenteeTable({
           isSuccessGetMentees={isSuccessGetMentees}
           onDeleteMentee={onDeleteMentee}
           onEditMentee={onEditMentee}
+          onDetailMentee={onDetailMentee}
         />
       </TableBody>
     </Table>
@@ -129,4 +136,5 @@ AdminListMenteeTable.propTypes = {
   isLoadingGetMentees: PropTypes.bool,
   onEditMentee: PropTypes.func,
   onDeleteMentee: PropTypes.func,
+  onDetailMentee: PropTypes.func,
 }

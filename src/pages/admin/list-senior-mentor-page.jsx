@@ -17,7 +17,7 @@ const initialSeniorMentorSearch = {
 }
 
 export default function AdminListSeniorMentorPage() {
-  const [choosedSeniorMentor, seChoosedSeniorMentor] = useState(null)
+  const [choosedSeniorMentor, setChoosedSeniorMentor] = useState(null)
 
   const {
     isOpenDialog: isOpenCreateSeniorMentorDialog,
@@ -52,19 +52,17 @@ export default function AdminListSeniorMentorPage() {
   })
 
   function onDetailSeniorMentor(seniorMentor) {
-    seChoosedSeniorMentor(seniorMentor)
+    setChoosedSeniorMentor(seniorMentor)
     onOpenDetailSeniorMentorDialog(true)
   }
   function onEditSeniorMentor(seniorMentor) {
-    seChoosedSeniorMentor(seniorMentor)
+    setChoosedSeniorMentor(seniorMentor)
     onOpenEditSeniorMentorDialog(true)
   }
   function onDeleteSeniorMentor(seniorMentor) {
-    seChoosedSeniorMentor(seniorMentor)
+    setChoosedSeniorMentor(seniorMentor)
     onOpenDeleteSeniorMentorDialog(true)
   }
-
-  console.log(seniorMentors)
 
   return (
     <div className="flex flex-col">
@@ -104,19 +102,19 @@ export default function AdminListSeniorMentorPage() {
         onClose={() => {}}
       />
       <AdminDetailSeniorMentorDialog
-        onClose={() => seChoosedSeniorMentor(null)}
+        onClose={() => setChoosedSeniorMentor(null)}
         onOpenChange={onOpenDetailSeniorMentorDialog}
         open={isOpenDetailSeniorMentorDialog}
         seniorMentor={choosedSeniorMentor}
       />
       <AdminEditSeniorMentorDialog
-        onClose={() => seChoosedSeniorMentor(null)}
+        onClose={() => setChoosedSeniorMentor(null)}
         onOpenChange={onOpenEditSeniorMentorDialog}
         open={isOpenEditSeniorMentorDialog}
         seniorMentor={choosedSeniorMentor}
       />
       <AdminDeleteSeniorMentorDialog
-        onClose={() => seChoosedSeniorMentor(null)}
+        onClose={() => setChoosedSeniorMentor(null)}
         onOpenChange={onOpenDeleteSeniorMentorDialog}
         open={isOpenDeleteSeniorMentorDialog}
         seniorMentor={choosedSeniorMentor}

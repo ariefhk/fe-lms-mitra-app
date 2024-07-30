@@ -35,7 +35,7 @@ function AdminClassRows({
                 e.stopPropagation()
                 onEditClass(c)
               }}>
-              Edit
+              Ubah
             </Button>
             <Button
               onClick={(e) => {

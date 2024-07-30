@@ -121,8 +121,8 @@ export default function AdminEditClassDialog({
         </AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
-              Input Data Kelas
+            <span className="text-txt24_36 font-semibold  bg-gradient-to-r from-cyan-400  to-[#8A3DFF]  text-transparent bg-clip-text">
+              Ubah Kelas
             </span>
             <Separator />
           </AlertDialogTitle>
@@ -254,7 +254,7 @@ export default function AdminEditClassDialog({
             {isLoadingUpdateClass && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}
-            Simpan
+            Ubah
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
