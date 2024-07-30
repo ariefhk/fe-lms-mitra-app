@@ -49,7 +49,6 @@ export default function MentorEditMenteeAssignmentDialog({
       assignmentId: "",
       menteeId: "",
       grade: "",
-      status: "",
     },
   })
 
@@ -60,7 +59,7 @@ export default function MentorEditMenteeAssignmentDialog({
       assignmentId: assignmentId,
       menteeId: menteeId,
       grade: values.grade,
-      status: values.status,
+      status: "COMPLETED",
     }
     // console.log("CREATE TUGAS DATA: ", mentorReviewData)
     try {
@@ -88,7 +87,7 @@ export default function MentorEditMenteeAssignmentDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
+      <AlertDialogContent className="px-0 max-w-[500px] font-poppins">
         <AlertDialogDescription className="sr-only">
           This action is for grading mentee Assignment.
         </AlertDialogDescription>
@@ -106,51 +105,14 @@ export default function MentorEditMenteeAssignmentDialog({
               className="overflow-auto py-2  w-full px-2 space-y-6 text-start">
               <FormField
                 control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Status Tugas</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Pilih Status Tugas Mentee" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {MENTOR_ASSIGNMENT_STATUS.map((status) => {
-                          return (
-                            <SelectItem key={status.id} value={status.value}>
-                              {status.key}
-                            </SelectItem>
-                          )
-                        })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
                 name="grade"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Nilai</FormLabel>
                     <FormControl>
                       <Input
-                        disabled={
-                          form.watch("status") === "REVISION" ||
-                          form.watch("status") === ""
-                        }
                         type="number"
-                        placeholder={
-                          form.watch("status") === "REVISION" ||
-                          form.watch("status") === ""
-                            ? "Anda bisa menilai tugas jika status tugas selesai"
-                            : "Masukkan Nilai Tugas Mentee"
-                        }
+                        placeholder={"Masukkan Nilai Tugas Mentee"}
                         {...field}
                       />
                     </FormControl>

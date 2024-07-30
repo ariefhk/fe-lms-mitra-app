@@ -82,7 +82,7 @@ function MentorMenteeRows({
                 e.stopPropagation()
                 onEditMenteeAssigment(c)
               }}>
-              Periksa Tugas
+              Beri Nilai
             </Button>
           </TableCell>
         </TableRow>

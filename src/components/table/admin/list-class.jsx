@@ -90,7 +90,7 @@ export default function AdminListClassTable({
   return (
     <Table>
       <TableHeader>
-        <TableRow className="bg-color-1 hover:bg-color-1/80">
+        <TableRow className="bg-color-1  hover:bg-color-1/80">
           <TableHead className="w-[20px] text-white">No</TableHead>
           <TableHead className="w-[200px] text-white">Nama Kelas</TableHead>
           <TableHead className="w-[300px] text-white">Mentor</TableHead>

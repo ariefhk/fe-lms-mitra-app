@@ -3,6 +3,7 @@ import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
 import AdminCreateClassDialog from "@/components/dialog/admin/add-class-dialog"
 import AdminDeleteClassDialog from "@/components/dialog/admin/delete-class-dialog"
+import AdminEditClassDialog from "@/components/dialog/admin/edit-class-dialog"
 import AdminListClassTable from "@/components/table/admin/list-class"
 import useDialog from "@/hooks/useDialog"
 import useInput from "@/hooks/useInput"
@@ -20,9 +21,15 @@ export default function AdminListClassPage() {
     isOpenDialog: isOpenCreateClassDialog,
     onOpenDialog: onOpenCreateClassDialog,
   } = useDialog()
+
   const {
     isOpenDialog: isOpenDeleteClassDialog,
     onOpenDialog: onOpenDeleteClassDialog,
+  } = useDialog()
+
+  const {
+    isOpenDialog: isOpenEditClassDialog,
+    onOpenDialog: onOpenEditClassDialog,
   } = useDialog()
 
   const { values: searchClassSearch, onChange: onChangeClassSearch } =
@@ -41,7 +48,10 @@ export default function AdminListClassPage() {
     onOpenDeleteClassDialog(true)
   }
 
-  console.log("classes", classes)
+  function onEditClass(classes) {
+    setChoosedClass(classes)
+    onOpenEditClassDialog(true)
+  }
 
   return (
     <div className="flex flex-col">
@@ -51,22 +61,22 @@ export default function AdminListClassPage() {
           <div className="flex items-center ">
             <GradientButton
               onClick={() => onOpenCreateClassDialog(true)}
-              className="w-[184px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
               name="Tambah Data"
+              className="w-[184px] rounded-full text-[15px] flex gap-x-2 h-[45px] p-0"
               iconClassName="w-6 h-6"
               Icon={IoMdAdd}
             />
             <GradientInput
-              placeholder="Cari Kelas..."
-              inputClassName="text-[15px]"
-              name="name"
-              value={searchClassSearch.name}
               onChange={onChangeClassSearch}
+              value={searchClassSearch.name}
+              name="name"
+              inputClassName="text-[15px]"
+              placeholder="Cari Kelas..."
             />
           </div>
           <AdminListClassTable
             onDeleteClass={onDeleteClass}
-            onEditClass={() => {}}
+            onEditClass={onEditClass}
             isLoadingGetClasses={isLoadingGetClasses}
             isSuccessGetClasses={isSuccessGetClasses}
             classes={classes}
@@ -80,8 +90,14 @@ export default function AdminListClassPage() {
       />
       <AdminDeleteClassDialog
         onClose={() => setChoosedClass(null)}
-        open={isOpenDeleteClassDialog}
         onOpenChange={onOpenDeleteClassDialog}
+        open={isOpenDeleteClassDialog}
+        classes={choosedClass}
+      />
+      <AdminEditClassDialog
+        onClose={() => setChoosedClass(null)}
+        onOpenChange={onOpenEditClassDialog}
+        open={isOpenEditClassDialog}
         classes={choosedClass}
       />
     </div>

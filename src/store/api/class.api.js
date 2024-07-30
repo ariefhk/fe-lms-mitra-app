@@ -38,7 +38,27 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         },
         body: {
           name: args?.name,
-          description: args?.descrition,
+          description: args?.description,
+          mentorId: args?.mentorId,
+        },
+      }),
+      transformResponse: (response) => {
+        const classes = response.data
+        return classes
+      },
+      invalidatesTags: () => [{ type: "CLASS", id: "LIST_OF_CLASS" }],
+    }),
+
+    updateClass: builder.mutation({
+      query: (args) => ({
+        url: `class/${args?.classId}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          name: args?.name,
+          description: args?.description,
           mentorId: args?.mentorId,
         },
       }),
@@ -69,6 +89,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
 })
 
 export const {
+  useUpdateClassMutation,
   useFindAllClassQuery,
   useCreateClassMutation,
   useDeleteClassMutation,

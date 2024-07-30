@@ -8,14 +8,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Separator } from "@/components/ui/separator"
 import { useDeleteClassMutation } from "@/store/api/class.api"
 import PropTypes from "prop-types"
 import { BsArrowRepeat } from "react-icons/bs"
@@ -58,42 +51,44 @@ export default function AdminDeleteClassDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
+      <AlertDialogContent className="px-0 font-poppins">
         <AlertDialogDescription className="sr-only">
           This action cannot be undone. This will permanently delete your
           account and remove your data from our servers.
         </AlertDialogDescription>
-        <AlertDialogHeader className="space-y-5">
-          <AlertDialogTitle className="text-txt20_30 text-wrap">
-            Apakah Anda yakin hapus Kelas{" "}
-            <span className="underline underline-offset-4">
-              {classes?.name} ?
-            </span>
+        <AlertDialogHeader className="px-6">
+          <AlertDialogTitle className="text-center">
+            Hapus Kelas
           </AlertDialogTitle>
-          <div className="w-full   max-h-[400px] overflow-y-auto">
-            <Table className="">
-              <TableHeader>
-                <TableRow className="bg-color-1   hover:bg-color-1/80">
-                  <TableHead className="w-[120px] text-white"></TableHead>
-                  <TableHead className=" text-white text-[16px] leading-[24px]">
-                    Keterangan
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="[&_tr:last-child]:border ">
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Nama Kelas
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {classes?.name || "-"}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
+          <Separator />
+          <AlertDialogDescription className="text-black">
+            Apakah Anda yakin ingin menghapus kelas{" "}
+            <span className="underline underline-offset-4 font-semibold">
+              {classes?.name}
+            </span>{" "}
+            ?
+            <div className="mt-4 grid gap-2">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Kelas:</span>
+                <span>{classes?.name}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Mentor:</span>
+                <span>{classes?.mentor?.name}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Senior Mentor:</span>
+                <span>{classes?.seniorMentor?.name}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Jumlah Mentee:</span>
+                <span>{classes?.menteeCount}</span>
+              </div>
+            </div>
+          </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <Separator />
+        <AlertDialogFooter className="px-6">
           <AlertDialogCancel asChild>
             <Button
               type="button"
@@ -105,11 +100,11 @@ export default function AdminDeleteClassDialog({
             </Button>
           </AlertDialogCancel>
           <Button
+            variant="destructive"
             disabled={isLoadingDeleteClass}
             onClick={async () => {
               await onDeleteClass()
-            }}
-            className="bg-color-4 text-white hover:text-white hover:bg-color-4/60 gap-x-2 flex items-center">
+            }}>
             {isLoadingDeleteClass && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}{" "}

@@ -50,8 +50,10 @@ export default function AdminCreateClassDialog({
   const [createClass, { isLoading: isLoadingCreateClass }] =
     useCreateClassMutation()
 
-  const { isOpenDialog: isOpenMentorList, onOpenDialog: onOpenMentorList } =
-    useDialog()
+  const {
+    isOpenDialog: isOpenListMentorDialog,
+    onOpenDialog: onOpenListMentorDialog,
+  } = useDialog()
 
   const {
     data: mentors,
@@ -77,6 +79,7 @@ export default function AdminCreateClassDialog({
       description: values.description,
       mentorId: values.mentorId,
     }
+
     try {
       await createClass(createClassData).unwrap()
       form.reset()
@@ -116,7 +119,7 @@ export default function AdminCreateClassDialog({
             <form
               id="add-class-form"
               onSubmit={form.handleSubmit(onSubmit)}
-              className="overflow-auto py-2  w-full px-2 space-y-6 text-start">
+              className="overflow-auto py-2 px-1 w-full  space-y-6 text-start">
               <FormField
                 control={form.control}
                 name="name"
@@ -152,10 +155,10 @@ export default function AdminCreateClassDialog({
                 name="mentorId"
                 render={({ field }) => (
                   <FormItem className="space-y-1">
-                    <FormLabel className=" font-light">Pilih Mentor</FormLabel>
+                    <FormLabel>Pilih Mentor</FormLabel>
                     <Popover
-                      open={isOpenMentorList}
-                      onOpenChange={onOpenMentorList}>
+                      open={isOpenListMentorDialog}
+                      onOpenChange={onOpenListMentorDialog}>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
@@ -191,7 +194,7 @@ export default function AdminCreateClassDialog({
                                           form.setValue("mentorId", t.id, {
                                             shouldDirty: true,
                                           })
-                                          onOpenMentorList(false)
+                                          onOpenListMentorDialog(false)
                                         }
                                       }}>
                                       <Check
@@ -228,7 +231,7 @@ export default function AdminCreateClassDialog({
                 form.reset()
                 typeof onClose === "function" && onClose()
               }}
-              className="bg-color-4 text-white hover:text-white hover:bg-color-4/60">
+              className="bg-color-1 text-white hover:text-white hover:bg-color-1/60">
               Tutup
             </Button>
           </AlertDialogCancel>
@@ -236,7 +239,7 @@ export default function AdminCreateClassDialog({
             disabled={isLoadingCreateClass || !isFormValueChanged}
             form="add-class-form"
             type="submit"
-            className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
+            className="bg-green-500 hover:bg-green-600">
             {isLoadingCreateClass && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}
