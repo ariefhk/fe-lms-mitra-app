@@ -16,8 +16,6 @@ export default function MentorProfilePage() {
     onOpenDialog: onOpenUpdateProfileDialog,
   } = useDialog()
 
-  console.log(user)
-
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Profile" />

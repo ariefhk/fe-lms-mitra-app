@@ -3,8 +3,8 @@ import { GradientButton } from "@/components/common/gradient-button"
 import { GradientInput } from "@/components/common/gradient-input"
 import AdminCreateMentorDialog from "@/components/dialog/admin/add-mentor-dialog"
 import AdminDeleteMentorDialog from "@/components/dialog/admin/delete-mentor-dialog"
-import AdminDetailMentorDialog from "@/components/dialog/admin/detail-mentor-dialog"
 import AdminEditMentorDialog from "@/components/dialog/admin/edit-mentor-dialog"
+import DetailMentorDialog from "@/components/dialog/common/detail-mentor-dialog"
 import AdminListMentorTable from "@/components/table/admin/list-mentor"
 import useDialog from "@/hooks/useDialog"
 import useInput from "@/hooks/useInput"
@@ -17,7 +17,7 @@ const initialMentorSearch = {
 }
 
 export default function AdminListMentorPage() {
-  const [choosedMentor, seChoosedMentor] = useState(null)
+  const [choosedMentor, setChoosedMentor] = useState(null)
 
   const {
     isOpenDialog: isOpenCreateMentorDialog,
@@ -49,20 +49,19 @@ export default function AdminListMentorPage() {
     name: searchMentorSearch.name,
   })
 
-  function onDetailMentor(mentor) {
-    seChoosedMentor(mentor)
-    onOpenDetailMentorDialog(true)
-  }
   function onEditMentor(mentor) {
-    seChoosedMentor(mentor)
+    setChoosedMentor(mentor)
     onOpenEditMentorDialog(true)
   }
   function onDeleteMentor(mentor) {
-    seChoosedMentor(mentor)
+    setChoosedMentor(mentor)
     onOpenDeleteMentorDialog(true)
   }
 
-  console.log(mentors)
+  function onDetailMentor(mentor) {
+    setChoosedMentor(mentor)
+    onOpenDetailMentorDialog(true)
+  }
 
   return (
     <div className="flex flex-col">
@@ -101,19 +100,19 @@ export default function AdminListMentorPage() {
         open={isOpenCreateMentorDialog}
       />
       <AdminDeleteMentorDialog
-        onClose={() => seChoosedMentor(null)}
+        onClose={() => setChoosedMentor(null)}
         onOpenChange={onOpenDeleteMentorDialog}
         open={isOpenDeleteMentorDialog}
         mentor={choosedMentor}
       />
       <AdminEditMentorDialog
-        onClose={() => seChoosedMentor(null)}
+        onClose={() => setChoosedMentor(null)}
         onOpenChange={onOpenEditMentorDialog}
         open={isOpenEditMentorDialog}
         mentor={choosedMentor}
       />
-      <AdminDetailMentorDialog
-        onClose={() => seChoosedMentor(null)}
+      <DetailMentorDialog
+        onClose={() => setChoosedMentor(null)}
         onOpenChange={onOpenDetailMentorDialog}
         open={isOpenDetailMentorDialog}
         mentor={choosedMentor}

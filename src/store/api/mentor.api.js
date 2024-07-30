@@ -31,7 +31,7 @@ export const mentorApi = protectedApiEndpoint.injectEndpoints({
     findMentorBySeniorMentor: builder.query({
       query: (args) => {
         return {
-          url: `mentor/senior-mentor/${args?.seniorMentorId}?name=${args.name}`,
+          url: `mentor/senior-mentor/?name=${args.name}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",

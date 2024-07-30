@@ -1,25 +1,36 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientInput } from "@/components/common/gradient-input"
+import DetailMentorDialog from "@/components/dialog/common/detail-mentor-dialog"
 import SeniorMentorListMentorTable from "@/components/table/senior-mentor/list-mentor"
+import useDialog from "@/hooks/useDialog"
 import useInput from "@/hooks/useInput"
 import { useFindMentorBySeniorMentorQuery } from "@/store/api/mentor.api"
-import { getUser } from "@/store/slices/user.slice"
-import { useSelector } from "react-redux"
+import { useState } from "react"
 
 const initialMentorSearch = {
   name: "",
 }
 
 export default function SeniorMentorListMentorPage() {
+  const [choosedMentor, setChoosedMentor] = useState(null)
   const { values: searchMentorValues, onChange: onChangeSearchMentor } =
     useInput(initialMentorSearch)
-  const user = useSelector(getUser)
+
+  const {
+    isOpenDialog: isOpenDetailMentorDialog,
+    onOpenDialog: onOpenDetailMentorDialog,
+  } = useDialog()
+
+  function onDetailMentor(mentor) {
+    setChoosedMentor(mentor)
+    onOpenDetailMentorDialog(true)
+  }
+
   const {
     data: mentors,
     isLoading: isLoadingGetMentors,
     isSuccess: isSuccessGetMentors,
   } = useFindMentorBySeniorMentorQuery({
-    seniorMentorId: user?.id,
     name: searchMentorValues.name,
   })
 
@@ -27,7 +38,7 @@ export default function SeniorMentorListMentorPage() {
 
   return (
     <div className="flex flex-col">
-      <DashboardHeader title="Mentor" />
+      <DashboardHeader title="Daftar Mentor" />
       <main className="flex flex-1 flex-col  gap-4  p-4 lg:gap-8 lg:p-6">
         <div className="flex flex-col items-end gap-y-8">
           <div className="flex items-center ">
@@ -40,13 +51,19 @@ export default function SeniorMentorListMentorPage() {
             />
           </div>
           <SeniorMentorListMentorTable
-            onDetailMentor={() => {}}
+            onDetailMentor={onDetailMentor}
             isLoadingGetMentors={isLoadingGetMentors}
             isSuccessGetMentors={isSuccessGetMentors}
             mentors={mentors}
           />
         </div>
       </main>
+      <DetailMentorDialog
+        onClose={() => setChoosedMentor(null)}
+        onOpenChange={onOpenDetailMentorDialog}
+        open={isOpenDetailMentorDialog}
+        mentor={choosedMentor}
+      />
     </div>
   )
 }
