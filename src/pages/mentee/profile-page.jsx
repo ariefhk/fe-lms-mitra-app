@@ -29,9 +29,12 @@ export default function MenteeProfilePage() {
             Icon={FaPencil}
           />
           <DashboardProfile
+            university={user?.university}
+            major={user?.major}
+            batch={user?.batch}
             name={user?.name}
             email={user?.email}
-            no_telp={user?.no_telp}
+            noTelp={user?.no_telp}
             imageUrl={getImageURL(user?.profilePicture)}
           />
         </div>

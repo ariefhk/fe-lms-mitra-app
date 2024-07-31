@@ -115,9 +115,12 @@ export default function MenteeTugasDetailPage() {
           <h1 className="font-semibold text-txt18_20">Detail Tugas Anda</h1>
           {isSuccessGetMenteeAssignmentDetail && (
             <div className="space-y-1 ">
-              <h1>Nama : {menteeAssignmentDetail?.assignment?.title}</h1>
               <h1>
-                Tenggat Waktu :{" "}
+                <span className="font-medium pr-2">Nama:</span>{" "}
+                {menteeAssignmentDetail?.assignment?.title}
+              </h1>
+              <h1>
+                <span className="font-medium pr-2"> Tenggat Waktu:</span>{" "}
                 <span className="text-rose-600 font-medium">
                   {formattedDate(
                     menteeAssignmentDetail?.assignment?.dueDate,
@@ -126,7 +129,7 @@ export default function MenteeTugasDetailPage() {
                 </span>
               </h1>
               <h1>
-                Status :{" "}
+                <span className="font-medium pr-2">Status:</span>{" "}
                 {
                   <AssignmentDetailStatus
                     status={menteeAssignmentDetail?.status}
@@ -134,7 +137,7 @@ export default function MenteeTugasDetailPage() {
                 }
               </h1>
               <h1>
-                Nilai :{" "}
+                <span className="font-medium pr-2">Nilai:</span>{" "}
                 <span className="text-txt18_20 font-semibold">
                   {menteeAssignmentDetail?.grade}
                 </span>

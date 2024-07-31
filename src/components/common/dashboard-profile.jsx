@@ -7,6 +7,9 @@ export default function DashboardProfile({
   email,
   noTelp,
   seniorMentor,
+  university,
+  batch,
+  major,
 }) {
   return (
     <div className="w-full rounded-[10px] shadow-2xl max-h-[400px] h-[400px] flex justify-center items-center">
@@ -19,11 +22,6 @@ export default function DashboardProfile({
         <div className="text-wrap space-y-5">
           <h1 className="text-txt30_40 text-color-4 font-medium">{name}</h1>
           <Separator />
-          {seniorMentor && (
-            <h1 className="text-txt16_24 text-color-4 font-medium">
-              Senior Mentor: {seniorMentor}
-            </h1>
-          )}
           <h1 className="text-txt16_24 text-color-4 font-medium">
             {" "}
             Email: {email}
@@ -31,6 +29,26 @@ export default function DashboardProfile({
           <h1 className="text-txt16_24 text-color-4 font-medium">
             No Telp: {noTelp}
           </h1>
+          {seniorMentor && (
+            <h1 className="text-txt16_24 text-color-4 font-medium">
+              Senior Mentor: {seniorMentor}
+            </h1>
+          )}
+          {university && (
+            <h1 className="text-txt16_24 text-color-4 font-medium">
+              Universitas: {university}
+            </h1>
+          )}
+          {major && (
+            <h1 className="text-txt16_24 text-color-4 font-medium">
+              Jurusan/Program Studi: {major}
+            </h1>
+          )}
+          {batch && (
+            <h1 className="text-txt16_24 text-color-4 font-medium">
+              Batch: {batch}
+            </h1>
+          )}
         </div>
       </div>
     </div>
@@ -43,4 +61,7 @@ DashboardProfile.propTypes = {
   email: Proptypes.string,
   noTelp: Proptypes.string,
   seniorMentor: Proptypes.string,
+  university: Proptypes.string,
+  batch: Proptypes.string,
+  major: Proptypes.string,
 }

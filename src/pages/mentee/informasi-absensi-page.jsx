@@ -1,4 +1,5 @@
 import DashboardHeader from "@/components/common/dashboard-header"
+import { GradientButton } from "@/components/common/gradient-button"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +11,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
@@ -18,10 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
 import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -29,9 +31,11 @@ import {
 import { MONTH_WITH_ID } from "@/constants/date"
 import { cn } from "@/lib/class-merge"
 import { formattedDate, getAllWeeksInMonth, getWeekOfMonth } from "@/lib/date"
+import { handleStatusPresence } from "@/lib/handle-statur-presence"
 import { useFindMenteeWeeklyAttendanceQuery } from "@/store/api/attendance"
 import { getUser } from "@/store/slices/user.slice"
 import { useMemo, useState } from "react"
+import { FaExchangeAlt } from "react-icons/fa"
 import { useSelector } from "react-redux"
 
 export default function MenteeInformasiAbsensiPage() {
@@ -69,6 +73,8 @@ export default function MenteeInformasiAbsensiPage() {
       week: choosedWeek,
     })
 
+  console.log(weeklyAttendance)
+
   return (
     <div className="flex flex-col">
       <DashboardHeader title="Daftar Absensi" />
@@ -76,14 +82,22 @@ export default function MenteeInformasiAbsensiPage() {
         <div className="flex flex-col items-start gap-y-8">
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button>Ubah Filter</Button>
+              <GradientButton
+                className="w-[180px] rounded-lg text-[16px]  flex gap-x-5 h-[48px] p-0"
+                name="Ubah Filter"
+                iconClassName="w-5 h-5"
+                Icon={FaExchangeAlt}
+              />
             </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader className="space-y-5">
-                <AlertDialogTitle>Ubah Filter</AlertDialogTitle>
-                <div className="space-y-5">
+            <AlertDialogContent className="px-0 space-y-3">
+              <AlertDialogHeader className="space-y-5 px-6">
+                <AlertDialogTitle className="font-semibold  bg-gradient-to-r from-cyan-400  to-[#8A3DFF]  text-transparent bg-clip-text text-center text-[22px]">
+                  Ubah Filter
+                </AlertDialogTitle>
+                <Separator />
+                <div className="space-y-8">
                   <div className="space-y-2">
-                    <h1>Pilih Bulan</h1>
+                    <h1 className="font-medium">Pilih Bulan</h1>
                     <Select
                       value={choosedMonth}
                       className="w-full"
@@ -116,7 +130,7 @@ export default function MenteeInformasiAbsensiPage() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <h1>Pilih Minggu</h1>
+                    <h1 className="font-medium">Pilih Minggu</h1>
                     <Select
                       className="w-full"
                       value={String(choosedRangeOfWeek)}
@@ -157,13 +171,18 @@ export default function MenteeInformasiAbsensiPage() {
                     </Select>
                   </div>
                 </div>
-                <AlertDialogDescription className=" sr-only">
-                  test
+                <AlertDialogDescription className="sr-only">
+                  Change Date Filter
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Continue</AlertDialogAction>
+              <Separator />
+              <AlertDialogFooter className="px-6 gap-x-3">
+                <AlertDialogCancel className="bg-color-1 text-white hover:text-white hover:bg-color-1/60">
+                  Tutup
+                </AlertDialogCancel>
+                <AlertDialogAction className="bg-green-500 hover:bg-green-600">
+                  Ubah
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -186,13 +205,37 @@ export default function MenteeInformasiAbsensiPage() {
                       <TableCell className="text-center text-txt16_24 font-medium">
                         {formattedDate(attd?.date, true)}
                       </TableCell>
-                      <TableCell className="text-center text-txt16_24 font-medium">
-                        {attd?.status}
+                      <TableCell
+                        className={cn(
+                          "font-semibold text-[16px] text-center",
+                          {
+                            "text-green-500 ": attd?.status === "PRESENT",
+                          },
+                          {
+                            "text-red-500 ": attd?.status === "ABSENT",
+                          },
+                          {
+                            "text-yellow-500 ": attd?.status === "HOLIDAY",
+                          },
+                        )}>
+                        {handleStatusPresence(attd?.status)}
                       </TableCell>
                     </TableRow>
                   )
                 })}
             </TableBody>
+            <TableFooter className="border">
+              <TableRow className="text-[16px]">
+                <TableCell className="text-center font-semibold">
+                  Rata-rata
+                </TableCell>
+                <TableCell className="text-center font-semibold">
+                  {isSuccessGetWeeklyAttendance
+                    ? `${weeklyAttendance?.percentagePresent} %`
+                    : "-"}
+                </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </div>
       </main>

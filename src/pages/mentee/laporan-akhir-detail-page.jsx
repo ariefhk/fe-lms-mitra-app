@@ -1,6 +1,9 @@
 import DashboardHeader from "@/components/common/dashboard-header"
 import { GradientButton } from "@/components/common/gradient-button"
 import { GradientLink } from "@/components/common/gradient-link"
+import MenteeRevisionDescriptionDialog from "@/components/dialog/mentee/revision-description-dialog"
+import { Button } from "@/components/ui/button"
+import useDialog from "@/hooks/useDialog"
 import { cn } from "@/lib/class-merge"
 import { formattedDate } from "@/lib/date"
 import { getFile } from "@/lib/getFile"
@@ -10,7 +13,7 @@ import {
 } from "@/store/api/assignment.api"
 import { getUser } from "@/store/slices/user.slice"
 import { useRef, useState } from "react"
-import { FaCloudDownloadAlt } from "react-icons/fa"
+import { FaCloudDownloadAlt, FaRegEdit } from "react-icons/fa"
 import { GrDocumentPdf } from "react-icons/gr"
 import { IoMdAdd } from "react-icons/io"
 import { useSelector } from "react-redux"
@@ -51,6 +54,12 @@ export default function MenteeFinalReportDetailPage() {
   const user = useSelector(getUser)
   const inputRef = useRef(null)
   const [files, setFiles] = useState(null)
+
+  const [revisionDescription, setRevisionDescription] = useState("")
+  const {
+    isOpenDialog: isOpenRevisionDescriptionDialog,
+    onOpenDialog: onOpenRevisionDescriptionDialog,
+  } = useDialog()
 
   const [
     submiMenteeAssignment,
@@ -105,6 +114,11 @@ export default function MenteeFinalReportDetailPage() {
     }
   }
 
+  function handleOpenRevisionDescriptionDialog() {
+    setRevisionDescription(menteeAssignmentDetail?.description || "")
+    onOpenRevisionDescriptionDialog(true)
+  }
+
   return (
     <div className="h-full">
       <DashboardHeader title="Mengumpulkan Laporan Akhir" />
@@ -115,9 +129,12 @@ export default function MenteeFinalReportDetailPage() {
           </h1>
           {isSuccessGetMenteeAssignmentDetail && (
             <div className="space-y-1 ">
-              <h1>Nama : {menteeAssignmentDetail?.assignment?.title}</h1>
               <h1>
-                Tenggat Waktu :{" "}
+                <span className="font-medium pr-2">Nama:</span>{" "}
+                {menteeAssignmentDetail?.assignment?.title}
+              </h1>
+              <h1>
+                <span className="font-medium pr-2"> Tenggat Waktu:</span>{" "}
                 <span className="text-rose-600 font-medium">
                   {formattedDate(
                     menteeAssignmentDetail?.assignment?.dueDate,
@@ -126,7 +143,7 @@ export default function MenteeFinalReportDetailPage() {
                 </span>
               </h1>
               <h1>
-                Status :{" "}
+                <span className="font-medium pr-2">Status:</span>{" "}
                 {
                   <AssignmentDetailStatus
                     status={menteeAssignmentDetail?.status}
@@ -143,6 +160,15 @@ export default function MenteeFinalReportDetailPage() {
               iconClassName="w-6 h-6"
               Icon={FaCloudDownloadAlt}
             />
+            {isSuccessGetMenteeAssignmentDetail &&
+              menteeAssignmentDetail?.status === "REVISION" && (
+                <Button
+                  onClick={() => handleOpenRevisionDescriptionDialog()}
+                  className="w-[300px] bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-full hover:text-white  text-[16px] items-center flex gap-x-2 h-[45px] p-0">
+                  <FaRegEdit className="flex-shrink-0 w-5 h-5" /> Lihat
+                  Penjelasan Revisi
+                </Button>
+              )}
           </div>
         </div>
         <div className="space-y-5">
@@ -220,6 +246,12 @@ export default function MenteeFinalReportDetailPage() {
           />
         </div>
       </main>
+      <MenteeRevisionDescriptionDialog
+        onClose={() => setRevisionDescription("")}
+        open={isOpenRevisionDescriptionDialog}
+        onOpenChange={onOpenRevisionDescriptionDialog}
+        description={revisionDescription}
+      />
     </div>
   )
 }
