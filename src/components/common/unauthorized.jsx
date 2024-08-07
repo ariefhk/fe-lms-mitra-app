@@ -2,17 +2,17 @@ import PropTypes from "prop-types"
 import { useNavigate } from "react-router-dom"
 import { Button } from "../ui/button"
 
-export default function NotFound({ isLogged }) {
+export default function Unauthorized({ isLogged }) {
   const navigate = useNavigate()
 
   return (
     <div className="h-svh">
       <div className="m-auto flex h-full w-full flex-col items-center justify-center gap-2">
-        <h1 className="text-[7rem] font-bold leading-tight">404</h1>
-        <span className="font-medium">Ups! Halaman Tidak Ditemukan!</span>
+        <h1 className="text-[7rem] font-bold leading-tight">401</h1>
+        <span className="font-medium">Ups! Kamu Tidak Memiliki Akses!</span>
         <p className="text-center text-muted-foreground">
-          Kelihatannya halaman yang kamu cari tidak Ada <br />
-          Atau sudah dihapus deh.
+          Halaman yang akan kamu akses diblokir <br />
+          Sepertinya kamu tidak diberi akses!.
         </p>
         <div className="mt-6 flex gap-4">
           <Button variant="outline" onClick={() => navigate(-1)}>
@@ -29,6 +29,6 @@ export default function NotFound({ isLogged }) {
   )
 }
 
-NotFound.propTypes = {
+Unauthorized.propTypes = {
   isLogged: PropTypes.bool,
 }

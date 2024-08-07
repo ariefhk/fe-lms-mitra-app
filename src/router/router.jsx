@@ -1,4 +1,5 @@
-import GuestNotFoundPage from "@/pages/not-found/not-found-page"
+import NotFoundPage from "@/pages/common/not-found-page"
+import UnauthorizedPage from "@/pages/common/unauthorized-page"
 import { createBrowserRouter } from "react-router-dom"
 import { adminRouter } from "./admin.router"
 import { authRouter } from "./auth.router"
@@ -15,6 +16,15 @@ export const router = createBrowserRouter([
   ...menteeRouter,
   ...authRouter,
 
+  // Fallback 401 Unathorized route
+  {
+    path: "/unauthorized",
+    Component: UnauthorizedPage,
+  },
+
   // Fallback 404 route
-  { path: "*", Component: GuestNotFoundPage },
+  {
+    path: "*",
+    Component: NotFoundPage,
+  },
 ])

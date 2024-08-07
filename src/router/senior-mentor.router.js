@@ -1,4 +1,4 @@
-import SeniorMentorLayout from "@/layouts/common/senior-mentor-layout"
+import SeniorMentorLayout from "@/layouts/senior-mentor-layout"
 import SeniorMentorDashboardPage from "@/pages/senior-mentor/dashboard-page"
 import SeniorMentorListMentorPage from "@/pages/senior-mentor/list-mentor"
 import SeniorMentorProfilePage from "@/pages/senior-mentor/profile-page"

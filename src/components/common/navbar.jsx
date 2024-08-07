@@ -21,8 +21,6 @@ function handleToDashboard(role) {
 export default function Navbar() {
   const user = useSelector(getUser)
 
-  console.log(user)
-
   return (
     <header className="fixed w-full font-poppins top-0 flex items-center h-20  z-20  gap-4  border-b bg-background ">
       <SectionWrapper className="flex items-center justify-between">

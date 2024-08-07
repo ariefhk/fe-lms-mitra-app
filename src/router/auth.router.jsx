@@ -1,4 +1,4 @@
-import AuthLayout from "@/layouts/common/auth-layout"
+import AuthLayout from "@/layouts/auth-layout"
 import LoginPage from "@/pages/auth/login-page"
 
 export const authRouter = [
