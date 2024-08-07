@@ -54,7 +54,22 @@ export default function MentorCreateAssignmentDialog({
       dueDate: values.dueDate,
       assignmentFile: values.assignmentFile,
     }
-    console.log("CREATE TUGAS DATA: ", createAssignmentData)
+    // console.log("CREATE TUGAS DATA: ", createAssignmentData)
+    if (
+      !createAssignmentData.classId ||
+      !createAssignmentData.title ||
+      !createAssignmentData.dueDate ||
+      !createAssignmentData.assignmentFile
+    ) {
+      return Swal.fire({
+        icon: "error",
+        title: "Gagal Tambah Tugas!",
+        text: "Judul Tugas, Tenggat Waktu, dan File Tugas harus diisi!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
+
     try {
       await createAssignment(createAssignmentData).unwrap()
       form.reset()

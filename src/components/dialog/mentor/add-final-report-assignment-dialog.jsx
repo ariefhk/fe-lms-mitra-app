@@ -56,7 +56,23 @@ export default function MentorCreateFinalReportAssignmentDialog({
       dueDate: values.dueDate,
       assignmentFile: values.assignmentFile,
     }
+
     // console.log("CREATE TUGAS DATA: ", createFinalReportAssignmentData)
+
+    if (
+      !createFinalReportAssignmentData.classId ||
+      !createFinalReportAssignmentData.title ||
+      !createFinalReportAssignmentData.dueDate ||
+      !createFinalReportAssignmentData.assignmentFile
+    ) {
+      return Swal.fire({
+        icon: "error",
+        title: "Gagal Tambah Tugas Laporan!",
+        text: "Judul Tugas Laporan, Tenggat Waktu, dan File Tugas harus diisi!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
     try {
       await createFinalReportAssignment(
         createFinalReportAssignmentData,
