@@ -65,7 +65,7 @@ export default function AdminCreateSeniorMentorDialog({
     ) {
       return Swal.fire({
         icon: "error",
-        title: "Gagal Tambah Mentor!",
+        title: "Gagal Tambah Senior Mentor!",
         text: "Nama, username, password, dan foto profile harus diisi!",
         showConfirmButton: false,
         timer: 1500,
