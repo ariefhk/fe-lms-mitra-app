@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 // Utility function to prepare headers
 const prepareAuthHeaders = (headers) => {
   const token = getLocalStorageData(LOCALSTORAGE.USER)?.token
-  console.log("current token: ", token)
+  // console.log("current token: ", token)
   if (token) {
     headers.set("Authorization", `Bearer ${token}`)
   }

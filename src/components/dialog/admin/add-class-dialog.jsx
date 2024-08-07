@@ -80,6 +80,20 @@ export default function AdminCreateClassDialog({
       mentorId: values.mentorId,
     }
 
+    if (
+      !createClassData.mentorId ||
+      !createClassData.name ||
+      !createClassData.description
+    ) {
+      return Swal.fire({
+        icon: "error",
+        title: "Gagal Tambah Kelas!",
+        text: "Nama, Deskripsi dan Mentor Kelas harus diisi!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
+
     try {
       await createClass(createClassData).unwrap()
       form.reset()

@@ -84,7 +84,7 @@ export default function AdminEditClassDialog({
   const isFormValueChanged = form.formState.isDirty
 
   async function onSubmit(values) {
-    const createClassData = {
+    const updateClassData = {
       classId: classes?.id,
       name: values.name,
       description: values.description,
@@ -92,7 +92,7 @@ export default function AdminEditClassDialog({
     }
 
     try {
-      await updateClass(createClassData).unwrap()
+      await updateClass(updateClassData).unwrap()
       form.reset()
       onOpenChange(false)
       Swal.fire({

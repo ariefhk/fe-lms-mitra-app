@@ -93,6 +93,23 @@ export default function AdminCreateMenteeDialog({
       password: values.password,
       profilePicture: values.profilePicture,
     }
+
+    if (
+      !createMenteeData?.name ||
+      !createMenteeData?.classId ||
+      !createMenteeData?.username ||
+      !createMenteeData?.password ||
+      !createMenteeData?.profilePicture
+    ) {
+      return Swal.fire({
+        icon: "error",
+        title: "Gagal Tambah Mentee!",
+        text: "Nama, Kelas, Username, Password dan Foto Profile harus diisi!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
+
     try {
       await createMentee(createMenteeData).unwrap()
       form.reset()
@@ -304,7 +321,7 @@ export default function AdminCreateMenteeDialog({
                 name="classId"
                 render={({ field }) => (
                   <FormItem className="space-y-1">
-                    <FormLabel className=" font-light">Pilih Kelas</FormLabel>
+                    <FormLabel>Pilih Kelas</FormLabel>
                     <Popover
                       open={isOpenClassListDialog}
                       onOpenChange={onOpenClassListDialog}>

@@ -89,6 +89,22 @@ export default function AdminCreateMentorDialog({
       seniorMentorId: values.seniorMentorId,
     }
     // console.log("CREATE MENTOR DATA: ", createMentorData)
+
+    if (
+      !createMentorData?.name ||
+      !createMentorData?.username ||
+      !createMentorData?.password ||
+      !createMentorData?.seniorMentorId ||
+      !createMentorData?.profilePicture
+    ) {
+      return Swal.fire({
+        icon: "error",
+        title: "Gagal Tambah Mentor!",
+        text: "Nama, Username, Password, Senior Mentor, dan Foto Profil harus diisi!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
     try {
       await createMentor(createMentorData).unwrap()
       form.reset()
@@ -249,9 +265,7 @@ export default function AdminCreateMentorDialog({
                 name="seniorMentorId"
                 render={({ field }) => (
                   <FormItem className="space-y-1">
-                    <FormLabel className=" font-light">
-                      Pilih Senior Mentor
-                    </FormLabel>
+                    <FormLabel>Pilih Senior Mentor</FormLabel>
                     <Popover
                       open={isOpenSeniorMentorDialog}
                       onOpenChange={onOpenSeniorMentorDialog}>

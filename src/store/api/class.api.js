@@ -52,7 +52,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
     updateClass: builder.mutation({
       query: (args) => ({
         url: `class/${args?.classId}`,
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },

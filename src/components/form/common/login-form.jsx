@@ -62,7 +62,7 @@ export default function LoginForm() {
       Swal.fire({
         icon: "error",
         title: "Gagal Login!",
-        text: error?.data?.message ?? "Maaf, Anda gagal gagal Login!",
+        text: error?.data?.message ?? "Maaf, Anda gagal Login!",
         showConfirmButton: false,
         timer: 1500,
       })

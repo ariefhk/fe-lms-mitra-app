@@ -48,7 +48,7 @@ export default function AdminCreateSeniorMentorDialog({
   const isFormValueChanged = form.formState.isDirty
 
   async function onSubmit(values) {
-    const createTeacherData = {
+    const createSeniorMentorData = {
       name: values.name,
       no_telp: values.no_telp,
       email: values.email,
@@ -56,8 +56,23 @@ export default function AdminCreateSeniorMentorDialog({
       password: values.password,
       profilePicture: values.profilePicture,
     }
+
+    if (
+      !createSeniorMentorData?.name ||
+      !createSeniorMentorData?.username ||
+      !createSeniorMentorData?.password ||
+      !createSeniorMentorData?.profilePicture
+    ) {
+      return Swal.fire({
+        icon: "error",
+        title: "Gagal Tambah Mentor!",
+        text: "Nama, username, password, dan foto profile harus diisi!",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
     try {
-      await createSeniorMentor(createTeacherData).unwrap()
+      await createSeniorMentor(createSeniorMentorData).unwrap()
       form.reset()
       onOpenChange(false)
       Swal.fire({

@@ -264,7 +264,7 @@ export default function AdminEditMentorDialog({
                 name="seniorMentorId"
                 render={({ field }) => (
                   <FormItem className="space-y-1">
-                    <FormLabel className=" font-light">Pilih Mentor</FormLabel>
+                    <FormLabel>Pilih Mentor</FormLabel>
                     <Popover
                       open={isOpenSeniorMentorListDialog}
                       onOpenChange={onOpenSeniorMentorListDialog}>
